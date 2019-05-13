@@ -5,7 +5,8 @@ Anton Danylenko
 Maryann Foley
 pd 08
 ---------------------
-Project Name -- short description
+CoCode -- An online code editor featuring live collaboration and execution of
+user written Python code
 
  ______   ______   __   __   __       ______   _______
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
@@ -18,9 +19,9 @@ Project Name -- short description
 ==============================================================
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 ==============================================================
-foleyM -- 2019-05-12 19:00
+firstL -- yyyy-mm-dd hh:mm
 --------------------------------------------------------------
-- Edited db schema
+- What you did
 ==============================================================
 
 foleyM -- 2019-05-10 02:00
@@ -28,14 +29,19 @@ foleyM -- 2019-05-10 02:00
 - Created db schema
 ==============================================================
 
-
-==============================================================
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-==============================================================
-
-firstL -- TIMESTAMP
+foleyM -- 2019-05-12 19:00
 --------------------------------------------------------------
-- What
-- you
-- did
+- Edited db schema
+==============================================================
+
+joanC -- 2019-05-13 00:30
+--------------------------------------------------------------
+==== SPECIAL ====
+DESIGN DOC REVIEW
+- Need to assign roles to each member
+- Need to create a timeline to keep ourselves on track
+- Need to make the database schema clearer
+- Need to robustify component map
+- Need to make site map clearer, possibly through digital generation
+- Need to robustify project description 
 ==============================================================
