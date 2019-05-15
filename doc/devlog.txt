@@ -45,3 +45,8 @@ DESIGN DOC REVIEW
 - Need to make site map clearer, possibly through digital generation
 - Need to robustify project description 
 ==============================================================
+
+joanC -- 2019-05-14 10:58
+--------------------------------------------------------------
+- updated design doc
+==============================================================
