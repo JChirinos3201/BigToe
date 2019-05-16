@@ -1,3 +1,5 @@
+import uuid
+
 import sqlite3   # enable control of an sqlite database
 
 class DB_Manager:
@@ -29,9 +31,26 @@ class DB_Manager:
         '''
         c = self.openDB()
         if not self.isInDB('USERS'):
-            command = 'CREATE TABLE "{0}"({1}, {2});'.format('USERS', 'username TEXT', 'password TEXT')
+            command = 'CREATE TABLE "{0}"({1}, {2});'.format('USERS', 'email TEXT', 'password TEXT')
             c.execute(command)
 
+    def createProjectIDTable(self):
+        '''
+        CREATES A 2 COLUMN id table if it doesnt already exist
+        '''
+        c = self.openDB()
+        if not self.isInDB('IDS'):
+            command = 'CREATE TABLE "{0}"({1}, {2});'.format('IDS', 'id TEXT', 'name TEXT')
+            c.execute(command)
+
+    def createPermissionsTable(self):
+        '''
+        CREATES A 2 COLUMN permissions table if it doesnt already exist
+        '''
+        c = self.openDB()
+        if not self.isInDB('PERMISSIONS'):
+            command = 'CREATE TABLE "{0}"({1}, {2});'.format('PERMISSIONS', 'id TEXT', 'email TEXT')
+            c.execute(command)
 
     def insertRow(self, tableName, data):
        '''
@@ -78,46 +97,78 @@ class DB_Manager:
 
     #======================== DB FXNS =========================
 
+    #======================= USER FXNS ========================
     def getUsers(self):
         '''
         RETURNS A DICTIONARY CONTAINING ALL CURRENT users AND CORRESPONDING PASSWORDS
         '''
         c = self.openDB()
-        command = 'SELECT username, password FROM USERS'
+        command = 'SELECT email, password FROM USERS'
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
 
 
-    def registerUser(self, username, password):
+    def registerUser(self, email, password):
         '''
-        ADDS user TO USERS table. Upon registration, user inputs wanted currency
+        ADDS user TO USERS table
         '''
         c = self.openDB()
         # userName is already in database -- do not continue to add
-        if self.findUser(username):
+        if self.findUser(email):
             return False
         # userName not in database -- continue to add
         else:
-            row = (username, password)
+            row = (email, password)
             self.insertRow('USERS', row)
             return True
 
-    def findUser(self, username):
+    def findUser(self, email):
         '''
         CHECKS IF userName IS UNIQUE
         '''
-        return username in self.getUsers()
+        return email in self.getUsers()
 
     def verifyUser(self, username, password):
         '''
         CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
         '''
         c = self.openDB()
-        command = 'SELECT username, password FROM USERS WHERE username = "{0}"'.format(username)
+        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(username)
         c.execute(command)
         selectedVal = c.fetchone()
         if selectedVal == None:
             return False
         if userName == selectedVal[0] and password == selectedVal[1]:
             return True
+
+    #========================   IDS FXNS ==========================
+
+    def getIDs(self):
+        '''
+        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects AND CORRESPONDING ids
+        '''
+        c = self.openDB()
+        command = 'SELECT id, name FROM IDS'
+        c.execute(command)
+        selectedVal = c.fetchall()
+        return dict(selectedVal)
+
+    def findID(self, uuid):
+        '''
+        CHECKS IF uuid IS UNIQUE
+        '''
+        return uuid in self.getIDs()
+
+    def createProject(self, projectName):
+        '''
+        ADDS project TO IDs table
+        '''
+        c = self.openDB()
+        id=string(uuid.uuid4())
+        while findID(id): #probably not necessary but might as well
+            id=string(uuid.uuid4())
+        row = (id, name)
+        self.insertRow('IDS', row)
+        #self.createPermission()
+        return True
