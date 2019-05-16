@@ -121,4 +121,3 @@ class DB_Manager:
             return False
         if userName == selectedVal[0] and password == selectedVal[1]:
             return True
-return False

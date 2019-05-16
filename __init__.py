@@ -10,7 +10,7 @@ app.secret_key = 'beans'
 
 DB_FILE="data/toes.db"
 user=None
-data=database.DB_Manager()
+data=database.DB_Manager(DB_FILE)
 data.createUsersTable()
 data.save()
 
@@ -23,6 +23,15 @@ def setUser(uname):
 @app.route('/')
 def landing():
     return render_template('index.html')
+
+@app.route('/home')
+def home():
+    if 'username' not in session:
+        return redirect(url_for('landing'))
+
+    username = session['username']
+    return render_template('landing.html', username = session['username'])
+
 
 
 if __name__ == '__main__':
