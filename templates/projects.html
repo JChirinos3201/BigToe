@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -10,11 +10,70 @@
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
+  <style>
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      /* Behind the navbar */
+      padding: 48px 0 0;
+      /* Height of navbar */
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+
+    .sidebar-sticky {
+      position: relative;
+      top: 0;
+      height: calc(100vh - 48px);
+      padding-top: .5rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      /* Scrollable contents if viewport is shorter than content. */
+    }
+
+    @supports ((position: -webkit-sticky) or (position: sticky)) {
+      .sidebar-sticky {
+        position: -webkit-sticky;
+        position: sticky;
+      }
+    }
+
+    .sidebar .nav-link {
+      font-weight: 500;
+      color: #333;
+    }
+
+    .sidebar .nav-link .feather {
+      margin-right: 4px;
+      color: #999;
+    }
+
+    .sidebar .nav-link.active {
+      color: #007bff;
+    }
+
+    .sidebar .nav-link:hover .feather,
+    .sidebar .nav-link.active .feather {
+      color: inherit;
+    }
+
+    .sidebar-heading {
+      font-size: .75rem;
+      text-transform: uppercase;
+    }
+
+    .sidebar-item:hover {
+      background-color: rgb(227, 228, 230);
+    }
+  </style>
+
   <title>Projects &bull; Code X Lab</title>
 </head>
 
-<body>
-  <nav class="navbar navbar-dark bg-dark">
+<body class="h-100">
+  <nav class="navbar navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="/landing">Code X Lab</a>
     <div>
       <a href="/profile"><i class="fas fa-user-circle fa-2x"></i></a>
@@ -23,14 +82,24 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3">
+      <nav class="col-3 col-md-2 bg-light sidebar">
+        <div class="sidebar-sticky w-100">
+          <ul class="nav flex-column text-center">
 
-      </div>
-      <div class="col-9">
+            <a class="nav-link sidebar-item text-success" href="#" id="add_project"><i class="fas fa-plus"></i> Add Project</a>
 
-      </div>
+            <!-- This is how the tabs for each project should be rendered -->
+            <a class="nav-link sidebar-item active" href="#">Project 1</a>
+
+
+          </ul>
+        </div>
+      </nav>
+      <div class="col-9 col-md-10"></div>
     </div>
   </div>
+
+
 
 
   <!-- Optional JavaScript -->

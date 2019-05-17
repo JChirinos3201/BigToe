@@ -84,7 +84,6 @@ def register_account():
         return redirect(url_for('register'))
 
 
-
 if __name__ == '__main__':
     app.debug = True
     app.run()
