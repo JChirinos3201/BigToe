@@ -8,7 +8,12 @@ from util import database
 app = Flask(__name__)
 app.secret_key = 'beans'
 
-DB_FILE="data/toes.db"
+# for testing
+DB_FILE = "data/toes.db"
+
+# for running
+# DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
+
 user=None
 data=database.DB_Manager(DB_FILE)
 data.createUsersTable()
