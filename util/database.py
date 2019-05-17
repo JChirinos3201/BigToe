@@ -95,7 +95,11 @@ class DB_Manager:
         self.db.close()
     #========================HELPER FXNS=======================
 
+
+
+    #==========================================================
     #======================== DB FXNS =========================
+    #==========================================================
 
     #======================= USER FXNS ========================
     def getUsers(self):
@@ -129,17 +133,17 @@ class DB_Manager:
         '''
         return email in self.getUsers()
 
-    def verifyUser(self, username, password):
+    def verifyUser(self, email, password):
         '''
         CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
         '''
         c = self.openDB()
-        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(username)
+        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(email)
         c.execute(command)
         selectedVal = c.fetchone()
         if selectedVal == None:
             return False
-        if userName == selectedVal[0] and password == selectedVal[1]:
+        if email == selectedVal[0] and password == selectedVal[1]:
             return True
 
     #========================   IDS FXNS ==========================
@@ -172,3 +176,37 @@ class DB_Manager:
         self.insertRow('IDS', row)
         #self.createPermission()
         return True
+
+    #==================== PERMISSIONS FXNS ==========================
+
+    def getPermissions(self):
+        '''
+        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects AND CORRESPONDING ids
+        '''
+        c = self.openDB()
+        command = 'SELECT id, email FROM PERMISSIONS'
+        c.execute(command)
+        selectedVal = c.fetchall()
+        return dict(selectedVal)
+
+    def findProjects(self, email):
+        '''
+        Returns all of the projects that the email has permission to access
+        '''
+        c = self.openDB()
+        command = 'SELECT id, email FROM PERMISSIONS WHERE email={0}'.format(email)
+        c.execute(command)
+        selectedVal = c.fetchall()
+        return dict(selectedVal)
+
+    def createPermission(self, uuid, email):
+        '''
+        ADDS permission TO PERMISSIONS table
+        '''
+        c = self.openDB()
+        if findID(uuid):
+            row = (uuid, email)
+            self.insertRow('PERMISSIONS', row)
+            #self.createPermission()
+            return True
+        return False
