@@ -40,7 +40,7 @@ class DB_Manager:
         '''
         c = self.openDB()
         if not self.isInDB('IDS'):
-            command = 'CREATE TABLE "{0}"({1}, {2});'.format('IDS', 'id TEXT', 'name TEXT')
+            command = 'CREATE TABLE "{0}"({1}, {2});'.format('IDS', 'id TEXT', 'email TEXT')
             c.execute(command)
 
     def createPermissionsTable(self):
@@ -172,7 +172,7 @@ class DB_Manager:
         id=str(uuid.uuid4())
         while self.findID(id): #probably not necessary but might as well
             id=str(uuid.uuid4())
-        row = (id, name)
+        row = (id, email)
         self.insertRow('IDS', row)
         self.createPermission(uuid, email)
         return True
