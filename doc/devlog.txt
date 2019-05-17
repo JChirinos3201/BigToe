@@ -89,7 +89,7 @@ maryannF -- 2019-05-15 14:00
 
 susanL -- 2019-05-16 21:12
 --------------------------------------------------------------
-- Updated login in app.py and created skeleton landing.html 
+- Updated login in app.py and created skeleton landing.html
 ==============================================================
 
 joanC -- 2019-05-16 21:58
@@ -97,4 +97,11 @@ joanC -- 2019-05-16 21:58
 - Moved the apache error log pulling files
 - Put DiffJS into a client side JS file
 - Attempted to create a logo, but was not successful
+==============================================================
+
+linS -- 2019-05-17 14:02
+--------------------------------------------------------------
+- Updated login, register files, changed __init__.py
+- made register.html
+- made file.html  
 ==============================================================
