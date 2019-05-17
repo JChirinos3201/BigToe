@@ -34,6 +34,11 @@ foleyM -- 2019-05-12 19:00
 - Edited db schema
 ==============================================================
 
+linS -- 2019-05-12 02:00
+--------------------------------------------------------------
+- Created Component Map
+==============================================================
+
 joanC -- 2019-05-13 00:30
 --------------------------------------------------------------
 ==== SPECIAL ====
@@ -43,7 +48,7 @@ DESIGN DOC REVIEW
 - Need to make the database schema clearer
 - Need to robustify component map
 - Need to make site map clearer, possibly through digital generation
-- Need to robustify project description 
+- Need to robustify project description
 ==============================================================
 
 joanC -- 2019-05-14 10:58
@@ -54,8 +59,16 @@ foleyM -- 2019-05-14 13:30
 --------------------------------------------------------------
 - Update project description
 ==============================================================
+linS -- 2019-05-14 13:33
+--------------------------------------------------------------
+- Updated Component Map and Site Maps
+==============================================================
 foleyM -- 2019-05-15 14:00
 --------------------------------------------------------------
 - create db.py
 - create methods to create user table, add new users, and check login info
+==============================================================
+linS -- 2019-05-16 21:12
+--------------------------------------------------------------
+- Updated login in app.py and created skeleton landing.html 
 ==============================================================
