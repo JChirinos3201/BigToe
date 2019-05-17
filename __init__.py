@@ -43,7 +43,6 @@ def home():
     # elif request.form['submit'] == 'Login':
     #     if len(email.strip()) != 0 and len(password.strip()) != 0 and db.verifyUser(username, password):
     #         session['username'] = username
-    #         #data.save()
     #         return redirect(url_for('home'))
     #     # user was found but password is incorrect
     #     elif db.findUser(username):
@@ -56,7 +55,7 @@ def home():
     #     email = request.form['email']
     #
     #     print('\n\nREGISTERING USER\n\n')
-    #     print('\n\tUsername: {}\n\tPassword: {}\n\tPassword Check: {}\n\tEmail: {}\n\n\n'.format(username, password, passwordCheck, email))
+    #     print('\n\tPassword: {}\n\tPassword Check: {}\n\tEmail: {}\n\n\n'.format(password, passwordCheck, email))
     #
     #     if password != passwordCheck:
     #         flash('Passwords don\'t match!')
@@ -66,8 +65,6 @@ def home():
     #         flash('bad email!')
     #     else:
     #         db.registerUser(email, password)
-    #         #db.save()
-    #         flash('Successfully registered account for user "{0}"'.format(username))
     # return redirect(url_for('index'))
 
 
