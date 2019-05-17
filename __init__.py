@@ -3,7 +3,7 @@
 from flask import (Flask, render_template, redirect, url_for,
                    session, request, flash, get_flashed_messages)
 
-from util import database as db
+from util import database
 
 app = Flask(__name__)
 app.secret_key = 'beans'
@@ -14,7 +14,7 @@ DB_FILE = "data/toes.db"
 # for running
 # DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
 
-data = database.DB_Manager(DB_FILE)
+db = database.DB_Manager(DB_FILE)
 data.createUsersTable()
 data.save()
 

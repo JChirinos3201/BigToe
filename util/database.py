@@ -60,7 +60,7 @@ class DB_Manager:
          must be 3 columns big
        '''
        c = self.openDB()
-       command = 'INSERT INTO "{0}" VALUES(?, ?, ?, ?)'
+       command = 'INSERT INTO "{0}" VALUES(?, ?)'
        c.execute(command.format(tableName), data)
 
 
@@ -145,6 +145,7 @@ class DB_Manager:
             return False
         if email == selectedVal[0] and password == selectedVal[1]:
             return True
+        return False
 
     #========================   IDS FXNS ==========================
 
