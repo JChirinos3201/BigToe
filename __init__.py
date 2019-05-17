@@ -32,6 +32,44 @@ def home():
     username = session['username']
     return render_template('landing.html', username = session['username'])
 
+# @app.route('/authenticate', methods=['POST'])
+# def authenticate():
+#     #
+    # username, password = request.form['email'], request.form['password']
+    #
+    # if 'submit' not in request.form:
+    #     return redirect(url_for('index'))
+    #
+    # elif request.form['submit'] == 'Login':
+    #     if len(email.strip()) != 0 and len(password.strip()) != 0 and db.verifyUser(username, password):
+    #         session['username'] = username
+    #         #data.save()
+    #         return redirect(url_for('home'))
+    #     # user was found but password is incorrect
+    #     elif db.findUser(username):
+    #         flash('incorrect email!')
+    #     # user not found in DB at all
+    #     else:
+    #         flash('incorrect bud!')
+    # else:
+    #     passwordCheck = request.form['passwordConfirmation']
+    #     email = request.form['email']
+    #
+    #     print('\n\nREGISTERING USER\n\n')
+    #     print('\n\tUsername: {}\n\tPassword: {}\n\tPassword Check: {}\n\tEmail: {}\n\n\n'.format(username, password, passwordCheck, email))
+    #
+    #     if password != passwordCheck:
+    #         flash('Passwords don\'t match!')
+    #     elif ' ' in password or len(password.strip()) == 0:
+    #         flash('bad password!')
+    #     elif ' ' in email or len(email.strip()) == 0 or '@' not in email or '.' not in email:
+    #         flash('bad email!')
+    #     else:
+    #         db.registerUser(email, password)
+    #         #db.save()
+    #         flash('Successfully registered account for user "{0}"'.format(username))
+    # return redirect(url_for('index'))
+
 
 
 if __name__ == '__main__':
