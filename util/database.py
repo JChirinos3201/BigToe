@@ -57,12 +57,11 @@ class DB_Manager:
          APPENDS data INTO THE TABLE THAT CORRESPONDS WITH tableName
          @tableName is the name the table being written to
          @data is a tuple containing data to be entered
-         must be 3 columns big
+         must be 2 columns big
        '''
        c = self.openDB()
-       command = 'INSERT INTO "{0}" VALUES(?, ?)'
-       c.execute(command.format(tableName), data)
-
+       command = 'INSERT INTO "{0}" VALUES {1}'
+       c.execute(command.format(tableName, data))
 
     def isInDB(self, tableName):
         '''
@@ -165,17 +164,17 @@ class DB_Manager:
         '''
         return uuid in self.getIDs()
 
-    def createProject(self, projectName):
+    def createProject(self, projectName,email):
         '''
         ADDS project TO IDs table
         '''
         c = self.openDB()
-        id=string(uuid.uuid4())
-        while findID(id): #probably not necessary but might as well
-            id=string(uuid.uuid4())
+        id=str(uuid.uuid4())
+        while self.findID(id): #probably not necessary but might as well
+            id=str(uuid.uuid4())
         row = (id, name)
         self.insertRow('IDS', row)
-        #self.createPermission()
+        self.createPermission(uuid, email)
         return True
 
     #==================== PERMISSIONS FXNS ==========================
@@ -205,7 +204,7 @@ class DB_Manager:
         ADDS permission TO PERMISSIONS table
         '''
         c = self.openDB()
-        if findID(uuid):
+        if self.findID(uuid):
             row = (uuid, email)
             self.insertRow('PERMISSIONS', row)
             #self.createPermission()
