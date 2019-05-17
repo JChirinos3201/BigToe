@@ -19,10 +19,8 @@
   <div class="h-25"></div>
   <div class="container text-center" style="width: 500px;">
     <h1 class="display-1">Code X Lab</h1>
-    <hr>
-    {% set msgs = get_flashed_messages() %}
-    {% for msg in msgs %}
-      <p style="color: white">{{ msg }}</p>
+    <hr> {% set msgs = get_flashed_messages() %} {% for msg in msgs %}
+    <p style="color: white">{{ msg }}</p>
     {% endfor %}
     <div class="card p-2 w-100 border-0">
       <form method="post" action="/authenticate">
@@ -33,7 +31,7 @@
           <input type="password" class="form-control" placeholder="Password" name="password" id="password">
         </div>
         <button id='Login' type="submit" class="btn btn-success w-25">Log in</button>
-        <button id='Register' type="submit" class="btn btn-info w-25">Register</button>
+        <a href="/register" class="btn btn-info w-25">Register</a>
       </form>
     </div>
   </div>
