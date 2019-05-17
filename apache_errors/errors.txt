@@ -1,0 +1,19 @@
+ AH00491: caught SIGTERM, shutting down
+ AH00489: Apache/2.4.29 (Ubuntu) mod_wsgi/4.5.17 Python/3.6 configured -- resuming normal operations
+ AH00094: Command line: '/usr/sbin/apache2'
+ mod_wsgi (pid=11844): Target WSGI script '/var/www/BigToe/bigtoe.wsgi' cannot be loaded as Python module.
+ mod_wsgi (pid=11844): Exception occurred processing WSGI script '/var/www/BigToe/bigtoe.wsgi'.
+ Traceback (most recent call last):
+   File "/var/www/BigToe/bigtoe.wsgi", line 7, in <module>
+     from BigToe import app as application
+   File "/var/www/BigToe/BigToe/__init__.py", line 6, in <module>
+     from util import database
+ ModuleNotFoundError: No module named 'util'
+ mod_wsgi (pid=11843): Target WSGI script '/var/www/BigToe/bigtoe.wsgi' cannot be loaded as Python module., referer: http://206.81.1.145/
+ mod_wsgi (pid=11843): Exception occurred processing WSGI script '/var/www/BigToe/bigtoe.wsgi'., referer: http://206.81.1.145/
+ Traceback (most recent call last):, referer: http://206.81.1.145/
+   File "/var/www/BigToe/bigtoe.wsgi", line 7, in <module>, referer: http://206.81.1.145/
+     from BigToe import app as application, referer: http://206.81.1.145/
+   File "/var/www/BigToe/BigToe/__init__.py", line 6, in <module>, referer: http://206.81.1.145/
+     from util import database, referer: http://206.81.1.145/
+ ModuleNotFoundError: No module named 'util', referer: http://206.81.1.145/
