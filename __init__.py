@@ -1,5 +1,7 @@
 #! /usr/bin/python3
 
+import re
+
 from flask import (Flask, render_template, redirect, url_for,
                    session, request, flash, get_flashed_messages)
 
@@ -55,6 +57,31 @@ def register():
 
 @app.route('/register_account', methods=["POST"])
 def register_account():
+    email = request.form['email']
+    password = request.form['password']
+    password_verify = request.form['password-verify']
+
+    if db.findUser(email):
+        flash('Email already registered')
+        return redirect(url_for('register'))
+
+    pass_regex_1 = re.compile('[A-Z]+')
+    pass_regex_2 = re.compile('[a-z]+')
+    pass_regex_3 = re.compile('[0-9]+')
+    pass_regex_4 = re.compile('^[A-Za-z0-9]{6,}$')
+
+    if pass_regex_1.match(password) and\
+       pass_regex_2.match(password) and\
+       pass_regex_3.match(password) and\
+       pass_regex_4.match(password) and\
+       password == password_verify:
+        db.registerUser(email, password)
+        db.save()
+        flash('Successfully registered. You may now log in')
+        return redirect(url_for('/'))
+    else:
+        flash('Invalid password')
+        return redirect(url_for('register'))
 
 
 
