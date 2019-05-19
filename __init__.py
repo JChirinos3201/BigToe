@@ -17,8 +17,8 @@ DB_FILE = "data/toes.db"
 # DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
 
 db = database.DB_Manager(DB_FILE)
-data.createUsersTable()
-data.save()
+db.createUsersTable()
+db.save()
 
 
 @app.route('/')
