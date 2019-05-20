@@ -109,6 +109,7 @@ class DB_Manager:
         c = self.openDB()
         if not self.isInDB('USERS'):
             self.createUsersTable()
+            self.save()
         print("TABLE: ", self.table('USERS'))
         command = 'SELECT email, password FROM USERS'
         c.execute(command)
@@ -123,6 +124,7 @@ class DB_Manager:
         c = self.openDB()
         if not self.isInDB('USERS'):
             self.createUsersTable()
+            self.save()
         # userName is already in database -- do not continue to add
         if self.findUser(email):
             return False
@@ -145,6 +147,7 @@ class DB_Manager:
         c = self.openDB()
         if not self.isInDB('USERS'):
             self.createUsersTable()
+            self.save()
         command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(email)
         c.execute(command)
         selectedVal = c.fetchone()
