@@ -53,13 +53,36 @@
       </div>
       <div class="col-9 col-md-10 py-2">
         <!-- Select a project to begin -->
-        <table class="table">
+        <table class="table table-hover">
           <thead class="thead-dark">
             <tr>
               <th scope="col">Filename</th>
               <th scope="col">Last Edited</th>
             </tr>
           </thead>
+          <tbody>
+            <!-- file = [name, timestamp, projectid, fileid] -->
+            {% for file in files %}
+            <tr>
+              <td><a href="/projects/{{file[2]}}/{{file[3]}}">{{file[0]}}</a></td>
+              <td>{{file[1]}}</td>
+            </tr>
+            {% endfor %}
+            <!--
+            <tr>
+              <td>{{file[0]}}</td>
+              <td>{{file[1]}}</td>
+            </tr>
+            <tr>
+              <td>{{file[0]}}</td>
+              <td>{{file[1]}}</td>
+            </tr>
+            <tr>
+              <td>{{file[0]}}</td>
+              <td>{{file[1]}}</td>
+            </tr>
+-->
+          </tbody>
         </table>
       </div>
     </div>
