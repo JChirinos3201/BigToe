@@ -23,6 +23,15 @@
     <div class="alert alert-warning">{{msg}}</div>
     {% endfor %}
     <div class="card p-2 w-100 border-0">
+      <div>
+        Requirements:
+        <ul>
+          <li>Least 1 Capital Letter</li>
+          <li>Least 1 lowercase letter</li>
+          <li>Least 1 number</li>
+          <li>Length at least 6</li>
+        </ul>
+      </div>
       <form method="post" action="/register_account">
         <div class="form-group">
           <input type="email" class="form-control" placeholder="Email" name="email" id="email">
@@ -39,7 +48,7 @@
     </div>
   </div>
 
-  <script src="~/static/temp.js"></script>
+  <script src="static/register.js"></script>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
