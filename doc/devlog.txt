@@ -126,3 +126,11 @@ joanC -- 2019-05-19 23:24
 - Cleaned up some files
 - Started thinking about project JS
 ==============================================================
+
+joanC -- 2019-05-19 23:24
+--------------------------------------------------------------
+- Worked on __init__
+- Added a base.html
+- Added a profile page
+- Worked on the projects page
+==============================================================
