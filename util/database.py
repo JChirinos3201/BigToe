@@ -106,6 +106,9 @@ class DB_Manager:
         RETURNS A DICTIONARY CONTAINING ALL CURRENT users AND CORRESPONDING PASSWORDS
         '''
         c = self.openDB()
+        print("TABLE: ", self.table('USERS'))
+        self.createUsersTable()
+        print("TABLE: ", self.table('USERS'))
         command = 'SELECT email, password FROM USERS'
         c.execute(command)
         selectedVal = c.fetchall()
@@ -117,6 +120,7 @@ class DB_Manager:
         ADDS user TO USERS table
         '''
         c = self.openDB()
+        self.createUsersTable()
         # userName is already in database -- do not continue to add
         if self.findUser(email):
             return False
@@ -137,6 +141,7 @@ class DB_Manager:
         CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
         '''
         c = self.openDB()
+        self.createUsersTable()
         command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(email)
         c.execute(command)
         selectedVal = c.fetchone()
