@@ -44,7 +44,7 @@
     <div class="row h-100">
       <div class="col-3 col-md-2 bg-light border p-2 text-center overflow-auto h-100">
         <!-- projects go here -->
-        <p class="mb-2"><a href="#" class="text-success project-links"><i class="fas fa-plus"></i>&nbsp;New Project</a></p>
+        <p class="mb-2"><a class="text-success project-links" onclick="show_new_project();" href="#"><i class="fas fa-plus"></i>&nbsp;New Project</a></p>
 
         <!-- projects = [(id, name), (id, name), ..] -->
         {% for project in projects %}
@@ -52,21 +52,7 @@
         {% endfor %}
       </div>
       <div class="col-9 col-md-10 py-2" id="file_content">
-        <!--        <h4>Please make a new project or select an existing project</h4>-->
-        <div class="card">
-          <h5 class="card-header">
-            New project
-          </h5>
-          <div class="card-body">
-            <form>
-              <div class="form-group">
-                <label for="project-name">Project Name</label>
-                <input class="form-control" type="text" maxlength="100" id="project-name" required>
-              </div>
-              <button class="btn btn-success">Create new project</button>
-            </form>
-          </div>
-        </div>
+        <h4>Please make a new project or select an existing project</h4>
       </div>
     </div>
   </div>

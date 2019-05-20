@@ -47,6 +47,11 @@ def get_files(projectId):
     return render_template('snippets/project_files.html', files=[('sample filename', '6 days ago', projectId, '420blazeit')])
 
 
+@app.route('/get_new_project')
+def get_new_project():
+    return render_template('snippets/new_project.html')
+
+
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
     email, password = request.form['email'], request.form['password']
@@ -120,6 +125,11 @@ def change_password():
     email = session['email']
     password = request.form['password']
     password_verify = request.form['password-verify']
+
+    pass_regex_1 = re.compile('[A-Z]+')
+    pass_regex_2 = re.compile('[a-z]+')
+    pass_regex_3 = re.compile('[0-9]+')
+    pass_regex_4 = re.compile('^[A-Za-z0-9]{6,}$')
 
     if pass_regex_1.match(password) and\
        pass_regex_2.match(password) and\
