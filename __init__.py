@@ -102,7 +102,7 @@ def profile():
 
 
 @app.route('/change_password', methods=['POST'])
-def change_password()
+def change_password():
     if 'email' not in session:
         return redirect(url_for('home'))
 
