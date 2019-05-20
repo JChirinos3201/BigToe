@@ -93,6 +93,7 @@ class DB_Manager:
         '''
         self.db.commit()
         self.db.close()
+        print(self.db)
     #========================HELPER FXNS=======================
 
 
@@ -172,6 +173,8 @@ class DB_Manager:
             return False
         if email == selectedVal[0]:
             command='DELETE FROM USERS WHERE email = "{0}"'.format(email)
+            c.execute(command)
+            self.save()
             row = (email, password)
             self.insertRow('USERS', row)
             return True
