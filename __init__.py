@@ -33,7 +33,18 @@ def projects():
     if 'email' not in session:
         return redirect(url_for('home'))
     email = session['email']
-    return render_template('projects.html', email=email)
+    # GET PROJECTS FROM DB
+    projects = None
+    return render_template('projects.html', email=email, projects=[('69696969', 'projectName')])
+
+
+@app.route('/get_files/<projectId>')
+def get_files(projectId):
+    # GET FILES FROM PROJECT FROM DB
+    files = None
+    # files = [file, file, file, ...]
+    # file = (name, timestamp, projectid, fileid)
+    return render_template('snippets/project_files.html', files=[('sample filename', '6 days ago', projectId, '420blazeit')])
 
 
 @app.route('/authenticate', methods=['POST'])
