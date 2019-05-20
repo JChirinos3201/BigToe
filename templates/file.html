@@ -32,17 +32,16 @@
     </div>
   </nav>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-3">
+  <!-- <div class = "col-md-6" name="input" style="float:right">
 
-      </div>
-      <div class="col-9">
+  </div> -->
 
-      </div>
-    </div>
-  </div>
-
+  <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/javascript");
+  </script>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
