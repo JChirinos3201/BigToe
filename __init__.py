@@ -87,7 +87,7 @@ def register_account():
         db.registerUser(email, password)
         db.save()
         flash('Successfully registered. You may now log in')
-        return redirect(url_for('/'))
+        return redirect(url_for('home'))
     else:
         flash('Invalid password')
         return redirect(url_for('register'))
