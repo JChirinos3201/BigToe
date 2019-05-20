@@ -97,7 +97,7 @@ def register_account():
 def profile():
     if 'email' not in session:
         return redirect(url_for('home'))
-    email = sesssion['email']
+    email = session['email']
     return render_template('profile.html', email=email)
 
 
