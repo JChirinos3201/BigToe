@@ -48,18 +48,18 @@
     <div class="card mx-auto my-3" style="max-width: 500px;">
       <h2 class="card-header">Your Profile</h2>
       <div class="card-body">
-        <form method="post" action="/change-password">
+        <form method="post" action="/change_password">
           <div class="form-group">
             <label for="email">Email Address</label>
             <input type="email" class="form-control" value="{{email}}" readonly>
           </div>
           <div class="form-group">
             <label for="password">New Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" maxlength="30" required>
           </div>
           <div class="form-group">
             <label for="password-verify">Verify New Password</label>
-            <input type="password" id="password-check" name="password-check" placeholder="Enter your password again" class="form-control" required>
+            <input type="password" id="password-verify" name="password-verify" placeholder="Enter your password again" class="form-control" maxlength="30" required>
           </div>
           <button class="btn btn-success" type="submit">Change password</button>
         </form>

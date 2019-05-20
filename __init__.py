@@ -93,6 +93,39 @@ def register_account():
         return redirect(url_for('register'))
 
 
+@app.route('/profile')
+def profile():
+    if 'email' not in session:
+        return redirect(url_for('home'))
+    email = sesssion['email']
+    return render_template('profile.html', email=email)
+
+
+@app.route('/change_password', methods=['POST'])
+def change_password()
+    if 'email' not in session:
+        return redirect(url_for('home'))
+
+    email = session['email']
+    password = request.form['password']
+    password_verify = request.form['password-verify']
+
+    if pass_regex_1.match(password) and\
+       pass_regex_2.match(password) and\
+       pass_regex_3.match(password) and\
+       pass_regex_4.match(password) and\
+       password == password_verify:
+        db.changePassword(email, password)
+        db.save()
+        flash('Successfully changed password!')
+    elif password == password_verify:
+        flash('Invalid password')
+    else:
+        flash('Passwords do not match')
+    return redirect(url_for('profile'))
+
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
