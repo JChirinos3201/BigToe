@@ -1,0 +1,16 @@
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Filename</th>
+      <th scope="col">Last Edited</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in files %}
+    <tr>
+      <td><a href="/projects/{{file[2]}}/{{file[3]}}">{{file[0]}}</a></td>
+      <td>{{file[1]}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
