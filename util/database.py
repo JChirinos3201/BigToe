@@ -33,6 +33,7 @@ class DB_Manager:
         if not self.isInDB('USERS'):
             command = 'CREATE TABLE "{0}"({1}, {2});'.format('USERS', 'email TEXT', 'password TEXT')
             c.execute(command)
+            c.execute('INSERT INTO USERS VALUES (?, ?)', ('email@website.com', 'password'))
 
     def createProjectIDTable(self):
         '''

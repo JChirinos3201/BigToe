@@ -117,3 +117,12 @@ joanC -- 2019-05-17 15:33
 - Worked on project page
 - Worked on __init__
 ==============================================================
+
+joanC -- 2019-05-19 23:24
+--------------------------------------------------------------
+- Worked on __init__
+- Changed db
+- Worked on index, project, register templates
+- Cleaned up some files
+- Started thinking about project JS
+==============================================================
