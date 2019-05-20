@@ -18,6 +18,8 @@ DB_FILE = "data/toes.db"
 
 db = database.DB_Manager(DB_FILE)
 db.createUsersTable()
+db.createProjectIDTable()
+db.createPermissionsTable()
 db.save()
 
 
@@ -30,8 +32,8 @@ def home():
 def projects():
     if 'email' not in session:
         return redirect(url_for('home'))
-    username = session['username']
-    return render_template('projects.html', username=username)
+    email = session['email']
+    return render_template('projects.html', email=email)
 
 
 @app.route('/authenticate', methods=['POST'])
