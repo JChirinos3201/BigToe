@@ -50,6 +50,13 @@ def authenticate():
         return redirect(url_for('home'))
 
 
+@app.route('/logout')
+def logout():
+    if 'email' in session:
+        session.pop('email')
+    return redirect(url_for('home'))
+
+
 @app.route('/register')
 def register():
     if 'email' not in session:

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100">
+<html lang="en" class="h-100 w-100">
 
 <head>
   <!-- Required meta tags -->
@@ -31,36 +31,40 @@
   </style>
 
 
-  <title>Projects &bull; Code X Lab</title>
+  <title>PAGENAME &bull; Code X Lab</title>
 </head>
 
-<body class="h-100 d-flex flex-column">
+<body class="h-100 d-flex flex-column w-100">
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Code X Lab</a>
     <a class="fas fa-user-circle fa-2x" id="account_icon" href="/profile"></a>
   </nav>
 
-  <div class="container-fluid flex-grow-1">
-    <div class="row h-100">
-      <div class="col-3 col-md-2 bg-light border p-2 text-center overflow-auto h-100">
-        <!-- projects go here -->
-        <p class="mb-2"><a href="#" class="text-success project-links"><i class="fas fa-plus"></i>&nbsp;New Project</a></p>
-
-        <!-- projects = [(id, name), (id, name), ..] -->
-        {% for project in projects %}
-        <p class="my-1"><a href="#" class="project-links" onclick="show_project('{{project[0]}}');">{{project[1]}}</a></p>
-        {% endfor %}
-      </div>
-      <div class="col-9 col-md-10 py-2">
-        <!-- Select a project to begin -->
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Filename</th>
-              <th scope="col">Last Edited</th>
-            </tr>
-          </thead>
-        </table>
+  <div class="container-fluid flex-grow-1 text-center w-100">
+    {% set msgs = get_flashed_messages() %}
+    {% for msg in msgs %}
+    <div class="alert alert-info mx-auto my-2" style="max-width: 500px;">{{msg}}</div>
+    {% endfor %}
+    <div class="card mx-auto my-3" style="max-width: 500px;">
+      <h2 class="card-header">Your Profile</h2>
+      <div class="card-body">
+        <form method="post" action="/change-password">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" class="form-control" value="{{email}}" readonly>
+          </div>
+          <div class="form-group">
+            <label for="password">New Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="password-verify">Verify New Password</label>
+            <input type="password" id="password-check" name="password-check" placeholder="Enter your password again" class="form-control" required>
+          </div>
+          <button class="btn btn-success" type="submit">Change password</button>
+        </form>
+        <hr>
+        <button class="btn btn-danger">Log out</button>
       </div>
     </div>
   </div>
@@ -71,8 +75,4 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="../static/projects.js"></script>
-  <!--
-  <script src="{{url_for('static', filename='projects.js')}}"></script>
-  -->
 </body></html>
