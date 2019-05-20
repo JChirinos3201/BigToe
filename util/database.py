@@ -157,6 +157,26 @@ class DB_Manager:
             return True
         return False
 
+    def changePassword(self, email, password):
+        '''
+        CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
+        '''
+        c = self.openDB()
+        if not self.isInDB('USERS'):
+            self.createUsersTable()
+            self.save()
+        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(email)
+        c.execute(command)
+        selectedVal = c.fetchone()
+        if selectedVal == None:
+            return False
+        if email == selectedVal[0]:
+            command='DELETE FROM USERS WHERE email = "{0}"'.format(email)
+            row = (email, password)
+            self.insertRow('USERS', row)
+            return True
+
+        return False
     #========================   IDS FXNS ==========================
 
     def getIDs(self):
