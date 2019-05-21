@@ -25,11 +25,17 @@ db.save()
 
 @app.route('/')
 def home():
+    '''
+    Renders the homepage
+    '''
     return render_template('index.html')
 
 
 @app.route('/projects')
 def projects():
+    '''
+    Renders the main project page
+    '''
     if 'email' not in session:
         return redirect(url_for('home'))
     email = session['email']
@@ -40,6 +46,9 @@ def projects():
 
 @app.route('/get_files/<projectId>')
 def get_files(projectId):
+    '''
+    Gets project files if user is signed in
+    '''
     # GET FILES FROM PROJECT FROM DB
     files = None
     # files = [file, file, file, ...]
@@ -49,11 +58,33 @@ def get_files(projectId):
 
 @app.route('/get_new_project')
 def get_new_project():
+    '''
+    Renders new project template for injection into /projects
+    '''
     return render_template('snippets/new_project.html')
+
+
+@app.route('/create_new_project')
+def create_new_project():
+    '''
+    Creates a new project in db then redirects to projects
+    '''
+    email = session['email']
+    name = request.form['project-name']
+
+    db.createProject(name, email)
+    db.save()
+
+    return redirect(url_for('projects'))
 
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
+    '''
+    Attempts to login user
+    On failure, flashes and redirects home
+    On success, flashes and redirects to project page
+    '''
     email, password = request.form['email'], request.form['password']
     if len(email.strip()) != 0\
        and len(password.strip()) != 0\
@@ -68,6 +99,9 @@ def authenticate():
 
 @app.route('/logout')
 def logout():
+    '''
+    Attempts to log user out, then redirects home
+    '''
     if 'email' in session:
         session.pop('email')
     return redirect(url_for('home'))
@@ -75,6 +109,9 @@ def logout():
 
 @app.route('/register')
 def register():
+    '''
+    Renders the register page if user isn't signed in
+    '''
     if 'email' not in session:
         return render_template('register.html')
     return redirect(url_for('landing'))
@@ -82,6 +119,11 @@ def register():
 
 @app.route('/register_account', methods=["POST"])
 def register_account():
+    '''
+    Attempts to register a new account
+    Flashes based on success
+    Redirects to: home on success, register on failure
+    '''
     email = request.form['email']
     password = request.form['password']
     password_verify = request.form['password-verify']
@@ -111,6 +153,9 @@ def register_account():
 
 @app.route('/profile')
 def profile():
+    '''
+    
+    '''
     if 'email' not in session:
         return redirect(url_for('home'))
     email = session['email']
