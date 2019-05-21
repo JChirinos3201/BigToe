@@ -22,7 +22,7 @@
     <hr>
     {% set msgs = get_flashed_messages() %}
     {% for msg in msgs %}
-    <div class="alert alert-info">{{msg}}</div>
+    <div class="alert alert-danger">{{msg}}</div>
     {% endfor %}
     <div class="card p-2 w-100 border-0">
       <form method="post" action="/authenticate">
