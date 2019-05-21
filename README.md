@@ -11,6 +11,7 @@ This website provides a quick and easy way for those who are new to coding to wo
 
 ---
 ### How to Run
-1. Clone the repo
-2. Install necessary plugins with: `pip install -r requirements.txt`
-3. Run `python __init__.py` to run the app on your localhost.
+1. If you do not have python3, install python3.6 by typing `sudo apt-get install python3.6`
+2. Clone the repo
+3. Install necessary plugins with: `pip install -r requirements.txt`
+4. Run `python __init__.py` to run the app on your localhost.
