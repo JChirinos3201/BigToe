@@ -11,4 +11,6 @@ This website provides a quick and easy way for those who are new to coding to wo
 
 ---
 ### How to Run
-Click [this link](https://youtu.be/dQw4w9WgXcQ) and voila!
+1. Clone the repo
+2. Install necessary plugins with: `pip install -r requirements.txt`
+3. Run `python __init__.py` to run the app on your localhost.
