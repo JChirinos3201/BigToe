@@ -17,6 +17,7 @@ class DB_Manager:
         '''
         SET UP TO READ/WRITE TO DB FILES
         '''
+
         self.DB_FILE = dbfile
         self.db = None
     # ========================HELPER FXNS=======================
@@ -31,19 +32,18 @@ class DB_Manager:
 
     def createUsersTable(self):
         '''
-        CREATES A 2 COLUMN USERS table if it doesnt already exist.
+        CREATES A 2 COLUMN users table if it doesnt already exist.
         Will be replaced by oauth.
         '''
         c = self.openDB()
-        c.execute('CREATE TABLE IF NOT EXISTS users(email TEXT,\
-                                                    password TEXT)')
-        c.execute('INSERT INTO USERS VALUES (?, ?)', ('admin', 'password'))
+        c.execute('CREATE TABLE IF NOT EXISTS users(email TEXT, password TEXT)')
+        c.execute('INSERT INTO users VALUES (?, ?)', ('admin', 'password'))
 
     def createProjectIDTable(self):
         '''
         CREATES A 2 COLUMN id table if it doesnt already exist
         '''
-        c = self.openDB()
+        c = self.openDB(), (password,email)
         c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, email TEXT)')
 
     def createPermissionsTable(self):
@@ -105,7 +105,7 @@ class DB_Manager:
         CORRESPONDING PASSWORDS
         '''
         c = self.openDB()
-        if not self.isInDB('USERS'):
+        if not self.isInDB('users'):
             self.createUsersTable()
             self.save()
         print("TABLE: ", self.table('users'))
@@ -116,7 +116,7 @@ class DB_Manager:
 
     def registerUser(self, email, password):
         '''
-        ADDS user TO USERS table
+        ADDS user TO users table
         '''
         if not self.isInDB('users'):
             self.createUsersTable()
@@ -127,7 +127,7 @@ class DB_Manager:
         # userName not in database -- continue to add
         else:
             row = (email, password)
-            self.insertRow('USERS', row)
+            self.insertRow('users', row)
             return True
 
     def findUser(self, email):
@@ -141,10 +141,10 @@ class DB_Manager:
         CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
         '''
         c = self.openDB()
-        if not self.isInDB('USERS'):
+        if not self.isInDB('users'):
             self.createUsersTable()
             self.save()
-        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'\
+        command = 'SELECT email, password FROM users WHERE email = "{0}"'\
                   .format(email)
         c.execute(command)
         selectedVal = c.fetchone()
@@ -159,25 +159,22 @@ class DB_Manager:
         CHECKS IF userName AND password MATCH THOSE FOUND IN DATABASE
         '''
         c = self.openDB()
-        if not self.isInDB('USERS'):
+        if not self.isInDB('users'):
             self.createUsersTable()
             self.save()
-        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'\
+        command = 'SELECT email, password FROM users WHERE email = "{0}"'\
                   .format(email)
         c.execute(command)
         selectedVal = c.fetchone()
         if selectedVal is None:
             return False
         if email == selectedVal[0]:
-            command = 'DELETE FROM USERS WHERE email = "{0}"'.format(email)
-            c.execute(command)
-            self.save()
-            row = (email, password)
-            self.insertRow('USERS', row)
+            command = 'UPDATE users SET password=? WHERE email = ?'
+            c.execute(command, (password, email))
             return True
 
         return False
-    # ========================   IDS FXNS ==========================
+    # ========================   ids FXNS ==========================
 
     def getIDs(self):
         '''
@@ -185,7 +182,7 @@ class DB_Manager:
         AND CORRESPONDING ids
         '''
         c = self.openDB()
-        command = 'SELECT id, name FROM IDS'
+        command = 'SELECT id, name FROM ids'
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
@@ -204,11 +201,11 @@ class DB_Manager:
         while self.findID(id):  # probably not necessary but might as well
             id = str(uuid.uuid4())
         row = (id, email)
-        self.insertRow('IDS', row)
+        self.insertRow('ids', row)
         self.createPermission(uuid, email)
         return True
 
-    # ==================== PERMISSIONS FXNS ==========================
+    # ==================== permissions FXNS ==========================
 
     def getPermissions(self):
         '''
@@ -216,7 +213,7 @@ class DB_Manager:
         AND CORRESPONDING ids
         '''
         c = self.openDB()
-        command = 'SELECT id, email FROM PERMISSIONS'
+        command = 'SELECT id, email FROM permissions'
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
@@ -226,7 +223,7 @@ class DB_Manager:
         Returns all of the projects that the email has permission to access
         '''
         c = self.openDB()
-        command = 'SELECT id, email FROM PERMISSIONS WHERE email={0}'\
+        command = 'SELECT id, email FROM permissions WHERE email={0}'\
                   .format(email)
         c.execute(command)
         selectedVal = c.fetchall()
@@ -234,11 +231,11 @@ class DB_Manager:
 
     def createPermission(self, uuid, email):
         '''
-        ADDS permission TO PERMISSIONS table
+        ADDS permission TO permissions table
         '''
         if self.findID(uuid):
             row = (uuid, email)
-            self.insertRow('PERMISSIONS', row)
+            self.insertRow('permissions', row)
             # self.createPermission()
             return True
         return False
