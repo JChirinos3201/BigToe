@@ -182,6 +182,9 @@ class DB_Manager:
         AND CORRESPONDING ids
         '''
         c = self.openDB()
+        if not self.isInDB('ids'):
+            self.createProjectIDTable()
+            self.save()
         command = 'SELECT id, name FROM ids'
         c.execute(command)
         selectedVal = c.fetchall()
@@ -191,12 +194,18 @@ class DB_Manager:
         '''
         CHECKS IF uuid IS UNIQUE
         '''
+        if not self.isInDB('ids'):
+            self.createProjectIDTable()
+            self.save()
         return uuid in self.getIDs()
 
     def createProject(self, projectName, email):
         '''
         ADDS project TO IDs table
         '''
+        if not self.isInDB('ids'):
+            self.createProjectIDTable()
+            self.save()
         id = str(uuid.uuid4())
         while self.findID(id):  # probably not necessary but might as well
             id = str(uuid.uuid4())
@@ -212,6 +221,9 @@ class DB_Manager:
         RETURNS A DICTIONARY CONTAINING ALL CURRENT projects
         AND CORRESPONDING ids
         '''
+        if not self.isInDB('permissions'):
+            self.createPermissionsTable()
+            self.save()
         c = self.openDB()
         command = 'SELECT id, email FROM permissions'
         c.execute(command)
@@ -233,9 +245,19 @@ class DB_Manager:
         '''
         ADDS permission TO permissions table
         '''
+        if not self.isInDB('permissions'):
+            self.createPermissionsTable()
+            self.save()
         if self.findID(uuid):
             row = (uuid, email)
             self.insertRow('permissions', row)
             # self.createPermission()
             return True
         return False
+
+
+    def getProjects(self,email):
+        d1=self.getPermissions(email)
+        d2=self.getIDs()
+        print(d1)
+        print(d2)
