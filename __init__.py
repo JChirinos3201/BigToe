@@ -114,7 +114,7 @@ def register():
     '''
     if 'email' not in session:
         return render_template('register.html')
-    return redirect(url_for('landing'))
+    return redirect(url_for('projects'))
 
 
 @app.route('/register_account', methods=["POST"])
