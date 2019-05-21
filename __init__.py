@@ -28,6 +28,8 @@ def home():
     '''
     Renders the homepage
     '''
+    if 'email' in session:
+        return redirect(url_for('projects'))
     return render_template('index.html')
 
 
