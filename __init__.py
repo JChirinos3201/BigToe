@@ -53,7 +53,9 @@ def get_files(projectId):
     files = None
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
-    return render_template('snippets/project_files.html', files=[('sample filename', '6 days ago', projectId, '420blazeit')])
+    return render_template('snippets/project_files.html',
+                           files=[('sample filename', '6 days ago',
+                                   projectId, '420blazeit')])
 
 
 @app.route('/get_new_project')
@@ -64,7 +66,7 @@ def get_new_project():
     return render_template('snippets/new_project.html')
 
 
-@app.route('/create_new_project')
+@app.route('/create_new_project', methods=["POST "])
 def create_new_project():
     '''
     Creates a new project in db then redirects to projects
@@ -154,7 +156,7 @@ def register_account():
 @app.route('/profile')
 def profile():
     '''
-    
+    Renders the profile template
     '''
     if 'email' not in session:
         return redirect(url_for('home'))
@@ -164,6 +166,11 @@ def profile():
 
 @app.route('/change_password', methods=['POST'])
 def change_password():
+    '''
+    Attempts to change the current user's password
+    Fails if password doesn't meet requirements
+    Flashes and redirects to profile page
+    '''
     if 'email' not in session:
         return redirect(url_for('home'))
 
@@ -189,7 +196,6 @@ def change_password():
     else:
         flash('Passwords do not match')
     return redirect(url_for('profile'))
-
 
 
 if __name__ == '__main__':

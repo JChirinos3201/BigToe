@@ -2,6 +2,7 @@ import uuid
 
 import sqlite3   # enable control of an sqlite database
 
+
 class DB_Manager:
     '''
     HOW TO USE:
@@ -11,58 +12,57 @@ class DB_Manager:
     the save method.
     The operations/methods can be found below.
     '''
+
     def __init__(self, dbfile):
         '''
         SET UP TO READ/WRITE TO DB FILES
         '''
         self.DB_FILE = dbfile
         self.db = None
-    #========================HELPER FXNS=======================
+    # ========================HELPER FXNS=======================
+
     def openDB(self):
         '''
         OPENS DB_FILE AND RETURNS A CURSOR FOR IT
         '''
-        self.db = sqlite3.connect(self.DB_FILE) # open if file exists, otherwise create
+        # open if file exists, otherwise create
+        self.db = sqlite3.connect(self.DB_FILE)
         return self.db.cursor()
 
     def createUsersTable(self):
         '''
-        CREATES A 2 COLUMN USERS table if it doesnt already exist. Will be replaced by oauth.
+        CREATES A 2 COLUMN USERS table if it doesnt already exist.
+        Will be replaced by oauth.
         '''
         c = self.openDB()
-        if not self.isInDB('USERS'):
-            command = 'CREATE TABLE "{0}"({1}, {2});'.format('USERS', 'email TEXT', 'password TEXT')
-            c.execute(command)
-            c.execute('INSERT INTO USERS VALUES (?, ?)', ('email@website.com', 'password'))
+        c.execute('CREATE TABLE IF NOT EXISTS users(email TEXT,\
+                                                    password TEXT)')
+        c.execute('INSERT INTO USERS VALUES (?, ?)', ('admin', 'password'))
 
     def createProjectIDTable(self):
         '''
         CREATES A 2 COLUMN id table if it doesnt already exist
         '''
         c = self.openDB()
-        if not self.isInDB('IDS'):
-            command = 'CREATE TABLE "{0}"({1}, {2});'.format('IDS', 'id TEXT', 'email TEXT')
-            c.execute(command)
+        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, email TEXT)')
 
     def createPermissionsTable(self):
         '''
         CREATES A 2 COLUMN permissions table if it doesnt already exist
         '''
         c = self.openDB()
-        if not self.isInDB('PERMISSIONS'):
-            command = 'CREATE TABLE "{0}"({1}, {2});'.format('PERMISSIONS', 'id TEXT', 'email TEXT')
-            c.execute(command)
+        c.execute('CREATE TABLE IF NOT EXISTS permissions(id TEXT,email TEXT)')
 
     def insertRow(self, tableName, data):
-       '''
-         APPENDS data INTO THE TABLE THAT CORRESPONDS WITH tableName
-         @tableName is the name the table being written to
-         @data is a tuple containing data to be entered
-         must be 2 columns big
-       '''
-       c = self.openDB()
-       command = 'INSERT INTO "{0}" VALUES {1}'
-       c.execute(command.format(tableName, data))
+        '''
+        APPENDS data INTO THE TABLE THAT CORRESPONDS WITH tableName
+        @tableName is the name the table being written to
+        @data is a tuple containing data to be entered
+        must be 2 columns big
+        '''
+        c = self.openDB()
+        command = 'INSERT INTO "{0}" VALUES {1}'
+        c.execute(command.format(tableName, data))
 
     def isInDB(self, tableName):
         '''
@@ -86,7 +86,6 @@ class DB_Manager:
         command = 'SELECT * FROM "{0}"'.format(tableName)
         c.execute(command)
 
-
     def save(self):
         '''
         COMMITS CHANGES TO DATABASE AND CLOSES THE FILE
@@ -94,36 +93,32 @@ class DB_Manager:
         self.db.commit()
         self.db.close()
         print(self.db)
-    #========================HELPER FXNS=======================
+    # ========================HELPER FXNS=======================
+    # ==========================================================
+    # ======================== DB FXNS =========================
+    # ==========================================================
+    # ======================= USER FXNS ========================
 
-
-
-    #==========================================================
-    #======================== DB FXNS =========================
-    #==========================================================
-
-    #======================= USER FXNS ========================
     def getUsers(self):
         '''
-        RETURNS A DICTIONARY CONTAINING ALL CURRENT users AND CORRESPONDING PASSWORDS
+        RETURNS A DICTIONARY CONTAINING ALL CURRENT users AND
+        CORRESPONDING PASSWORDS
         '''
         c = self.openDB()
         if not self.isInDB('USERS'):
             self.createUsersTable()
             self.save()
-        print("TABLE: ", self.table('USERS'))
-        command = 'SELECT email, password FROM USERS'
+        print("TABLE: ", self.table('users'))
+        command = 'SELECT email, password FROM users'
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
-
 
     def registerUser(self, email, password):
         '''
         ADDS user TO USERS table
         '''
-        c = self.openDB()
-        if not self.isInDB('USERS'):
+        if not self.isInDB('users'):
             self.createUsersTable()
             self.save()
         # userName is already in database -- do not continue to add
@@ -149,10 +144,11 @@ class DB_Manager:
         if not self.isInDB('USERS'):
             self.createUsersTable()
             self.save()
-        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(email)
+        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'\
+                  .format(email)
         c.execute(command)
         selectedVal = c.fetchone()
-        if selectedVal == None:
+        if selectedVal is None:
             return False
         if email == selectedVal[0] and password == selectedVal[1]:
             return True
@@ -166,13 +162,14 @@ class DB_Manager:
         if not self.isInDB('USERS'):
             self.createUsersTable()
             self.save()
-        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'.format(email)
+        command = 'SELECT email, password FROM USERS WHERE email = "{0}"'\
+                  .format(email)
         c.execute(command)
         selectedVal = c.fetchone()
-        if selectedVal == None:
+        if selectedVal is None:
             return False
         if email == selectedVal[0]:
-            command='DELETE FROM USERS WHERE email = "{0}"'.format(email)
+            command = 'DELETE FROM USERS WHERE email = "{0}"'.format(email)
             c.execute(command)
             self.save()
             row = (email, password)
@@ -180,11 +177,12 @@ class DB_Manager:
             return True
 
         return False
-    #========================   IDS FXNS ==========================
+    # ========================   IDS FXNS ==========================
 
     def getIDs(self):
         '''
-        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects AND CORRESPONDING ids
+        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects
+        AND CORRESPONDING ids
         '''
         c = self.openDB()
         command = 'SELECT id, name FROM IDS'
@@ -198,24 +196,24 @@ class DB_Manager:
         '''
         return uuid in self.getIDs()
 
-    def createProject(self, projectName,email):
+    def createProject(self, projectName, email):
         '''
         ADDS project TO IDs table
         '''
-        c = self.openDB()
-        id=str(uuid.uuid4())
-        while self.findID(id): #probably not necessary but might as well
-            id=str(uuid.uuid4())
+        id = str(uuid.uuid4())
+        while self.findID(id):  # probably not necessary but might as well
+            id = str(uuid.uuid4())
         row = (id, email)
         self.insertRow('IDS', row)
         self.createPermission(uuid, email)
         return True
 
-    #==================== PERMISSIONS FXNS ==========================
+    # ==================== PERMISSIONS FXNS ==========================
 
     def getPermissions(self):
         '''
-        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects AND CORRESPONDING ids
+        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects
+        AND CORRESPONDING ids
         '''
         c = self.openDB()
         command = 'SELECT id, email FROM PERMISSIONS'
@@ -228,7 +226,8 @@ class DB_Manager:
         Returns all of the projects that the email has permission to access
         '''
         c = self.openDB()
-        command = 'SELECT id, email FROM PERMISSIONS WHERE email={0}'.format(email)
+        command = 'SELECT id, email FROM PERMISSIONS WHERE email={0}'\
+                  .format(email)
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
@@ -237,10 +236,9 @@ class DB_Manager:
         '''
         ADDS permission TO PERMISSIONS table
         '''
-        c = self.openDB()
         if self.findID(uuid):
             row = (uuid, email)
             self.insertRow('PERMISSIONS', row)
-            #self.createPermission()
+            # self.createPermission()
             return True
         return False
