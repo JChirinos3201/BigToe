@@ -196,4 +196,11 @@ linS -- 2019-05-21 05:46
 - Worked on file page
 - created file.js
 - unfinished implementation of ace editor
+- accidentally downloaded ace aka please ignore in commit history :))
+
+linS -- 2019-05-22 00:18
+--------------------------------------------------------------
+- Created popup modal for delete button in file.js
+- integrated ace editor in class
+==============================================================
 ==============================================================
