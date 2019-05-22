@@ -40,7 +40,7 @@ def projects():
     '''
     if 'email' not in session:
         return redirect(url_for('home'))
-    email = session['email']
+    email = str(session['email'])
     # GET PROJECTS FROM DB
     projects = None
     return render_template('projects.html', email=email, projects=[('69696969', 'projectName')])
@@ -73,7 +73,10 @@ def create_new_project():
     '''
     Creates a new project in db then redirects to projects
     '''
-    email = session['email']
+    email = str(session['email'])
+    # print("Email: ", email)
+    # email = email[1:]
+    # print("Email: ", email)
     name = request.form['project-name']
 
     db.createProject(name, email)

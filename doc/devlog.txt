@@ -24,6 +24,13 @@ firstL -- 2019-mm-dd hh:mm
 - What you did
 ==============================================================
 
+antonD -- 2019-05-22 02:45
+--------------------------------------------------------------
+- No name column error fixed
+- Making a new project now runs without an error, but doesn't
+  actually add the project
+==============================================================
+
 antonD -- 2019-05-22 02:05
 --------------------------------------------------------------
 - Error says there's no name column in the ids table
