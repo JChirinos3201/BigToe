@@ -43,8 +43,8 @@ class DB_Manager:
         '''
         CREATES A 2 COLUMN id table if it doesnt already exist
         '''
-        c = self.openDB(), (password,email)
-        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, email TEXT)')
+        c = self.openDB()
+        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, name TEXT)')
 
     def createPermissionsTable(self):
         '''
