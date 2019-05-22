@@ -44,7 +44,8 @@ class DB_Manager:
         CREATES A 2 COLUMN id table if it doesnt already exist
         '''
         c = self.openDB()
-        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, name TEXT)')
+        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT,name TEXT)')
+        # c.execute('INSERT INTO ids VALUES (?, ?)', ('000', 'worm'))
 
     def createPermissionsTable(self):
         '''
@@ -85,6 +86,8 @@ class DB_Manager:
         c = self.openDB()
         command = 'SELECT * FROM "{0}"'.format(tableName)
         c.execute(command)
+        selectedVal = c.fetchall()
+        print(dict(selectedVal))
 
     def save(self):
         '''
@@ -185,7 +188,11 @@ class DB_Manager:
         if not self.isInDB('ids'):
             self.createProjectIDTable()
             self.save()
-        command = 'SELECT id, name FROM ids'
+            print("IDS table is in db.")
+            self.table('ids')
+            print("--------------------")
+        # print(self.db)
+        command = 'SELECT id,name FROM ids'
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)

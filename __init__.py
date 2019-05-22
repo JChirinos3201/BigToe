@@ -68,7 +68,7 @@ def get_new_project():
     return render_template('snippets/new_project.html')
 
 
-@app.route('/create_new_project', methods=["POST "])
+@app.route('/create_new_project', methods=['POST'])
 def create_new_project():
     '''
     Creates a new project in db then redirects to projects
