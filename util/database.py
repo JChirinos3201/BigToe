@@ -63,7 +63,8 @@ class DB_Manager:
         '''
         c = self.openDB()
         # print(data)
-        command = 'INSERT INTO "{0}" VALUES {1}'.format(tableName, data)
+        command = 'INSERT INTO {0} VALUES {1}'.format(tableName, data)
+        print(command)
         # print(command)
         c.execute(command)
 
@@ -95,7 +96,7 @@ class DB_Manager:
         '''
         COMMITS CHANGES TO DATABASE AND CLOSES THE FILE
         '''
-        self.openDB()
+        #self.openDB()
         self.db.commit()
         self.db.close()
         print(self.db)
@@ -219,9 +220,10 @@ class DB_Manager:
         id = str(uuid.uuid4())
         while self.findID(id):  # probably not necessary but might as well
             id = str(uuid.uuid4())
-        row = (id, email)
+        print(id)
+        row = (id, projectName)
         self.insertRow('ids', row)
-        self.createPermission(uuid, email)
+        #self.createPermission(uuid, email)
         return True
 
     # ==================== permissions FXNS ==========================
