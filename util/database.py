@@ -44,7 +44,9 @@ class DB_Manager:
         CREATES A 2 COLUMN id table if it doesnt already exist
         '''
         c = self.openDB()
-        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, email TEXT)')
+        c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, name TEXT)')
+        # c.execute('INSERT INTO ids VALUES (?, ?)', ('000', 'worm'))
+
 
     def createPermissionsTable(self):
         '''
@@ -61,8 +63,11 @@ class DB_Manager:
         must be 2 columns big
         '''
         c = self.openDB()
-        command = 'INSERT INTO "{0}" VALUES {1}'
-        c.execute(command.format(tableName, data))
+        # print(data)
+        command = 'INSERT INTO {0} VALUES {1}'.format(tableName, data)
+        print(command)
+        # print(command)
+        c.execute(command)
 
     def isInDB(self, tableName):
         '''
@@ -85,11 +90,14 @@ class DB_Manager:
         c = self.openDB()
         command = 'SELECT * FROM "{0}"'.format(tableName)
         c.execute(command)
+        selectedVal = c.fetchall()
+        print(dict(selectedVal))
 
     def save(self):
         '''
         COMMITS CHANGES TO DATABASE AND CLOSES THE FILE
         '''
+        #self.openDB()
         self.db.commit()
         self.db.close()
         print(self.db)
@@ -182,7 +190,14 @@ class DB_Manager:
         AND CORRESPONDING ids
         '''
         c = self.openDB()
-        command = 'SELECT id, name FROM ids'
+        if not self.isInDB('ids'):
+            self.createProjectIDTable()
+            self.save()
+            # print("IDS table is in db.")
+            # self.table('ids')
+            # print("--------------------")
+        # print(self.db)
+        command = 'SELECT * FROM ids'
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
@@ -191,18 +206,25 @@ class DB_Manager:
         '''
         CHECKS IF uuid IS UNIQUE
         '''
+        if not self.isInDB('ids'):
+            self.createProjectIDTable()
+            self.save()
         return uuid in self.getIDs()
 
     def createProject(self, projectName, email):
         '''
         ADDS project TO IDs table
         '''
+        if not self.isInDB('ids'):
+            self.createProjectIDTable()
+            self.save()
         id = str(uuid.uuid4())
         while self.findID(id):  # probably not necessary but might as well
             id = str(uuid.uuid4())
-        row = (id, email)
+        print(id)
+        row = (id, projectName)
         self.insertRow('ids', row)
-        self.createPermission(uuid, email)
+        #self.createPermission(uuid, email)
         return True
 
     # ==================== permissions FXNS ==========================
@@ -212,6 +234,9 @@ class DB_Manager:
         RETURNS A DICTIONARY CONTAINING ALL CURRENT projects
         AND CORRESPONDING ids
         '''
+        if not self.isInDB('permissions'):
+            self.createPermissionsTable()
+            self.save()
         c = self.openDB()
         command = 'SELECT id, email FROM permissions'
         c.execute(command)
@@ -233,9 +258,19 @@ class DB_Manager:
         '''
         ADDS permission TO permissions table
         '''
+        if not self.isInDB('permissions'):
+            self.createPermissionsTable()
+            self.save()
         if self.findID(uuid):
             row = (uuid, email)
             self.insertRow('permissions', row)
             # self.createPermission()
             return True
         return False
+
+
+    def getProjects(self,email):
+        d1=self.getPermissions(email)
+        d2=self.getIDs()
+        print(d1)
+        print(d2)

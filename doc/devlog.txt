@@ -24,6 +24,19 @@ firstL -- 2019-mm-dd hh:mm
 - What you did
 ==============================================================
 
+antonD -- 2019-05-22 02:45
+--------------------------------------------------------------
+- No name column error fixed
+- Making a new project now runs without an error, but doesn't
+  actually add the project
+==============================================================
+
+antonD -- 2019-05-22 02:05
+--------------------------------------------------------------
+- Error says there's no name column in the ids table
+  but there clearly is??
+==============================================================
+
 antonD -- 2019-05-21 02:15
 --------------------------------------------------------------
 - Fixed run and delete buttons in navbar
@@ -196,4 +209,11 @@ linS -- 2019-05-21 05:46
 - Worked on file page
 - created file.js
 - unfinished implementation of ace editor
+- accidentally downloaded ace aka please ignore in commit history :))
+
+linS -- 2019-05-22 00:18
+--------------------------------------------------------------
+- Created popup modal for delete button in file.js
+- integrated ace editor in class
+==============================================================
 ==============================================================
