@@ -23,6 +23,15 @@ db.createPermissionsTable()
 db.save()
 
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    '''
+    Catch-all route just in case some typo or something happens
+    '''
+    return redirect(url_for('home'))
+
+
 @app.route('/')
 def home():
     '''
@@ -42,8 +51,8 @@ def projects():
         return redirect(url_for('home'))
     email = session['email']
     # GET PROJECTS FROM DB
-    projects = None
-    return render_template('projects.html', email=email, projects=[('69696969', 'projectName')])
+    # projects = db.getProjects(email)
+    return render_template('projects.html', email=email, projects=[('sample_id', 'sample_name')])
 
 
 @app.route('/get_files/<projectId>')
@@ -52,12 +61,12 @@ def get_files(projectId):
     Gets project files if user is signed in
     '''
     # GET FILES FROM PROJECT FROM DB
-    files = None
+    # files = db.getFiles(projectId)
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
     return render_template('snippets/project_files.html',
-                           files=[('sample filename', '6 days ago',
-                                   projectId, '420blazeit')])
+                           files=[('sample filename', 'sample_timestamp',
+                                   projectId, 'sample_file_id')])
 
 
 @app.route('/get_new_project')
@@ -198,6 +207,10 @@ def change_password():
     else:
         flash('Passwords do not match')
     return redirect(url_for('profile'))
+
+@app.route('/projects/<project_id>/<file_id>')
+def file(project_id, file_id):
+    return render_template('file.html')
 
 
 if __name__ == '__main__':

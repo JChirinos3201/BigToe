@@ -28,6 +28,7 @@
     .project-links:hover {
       text-decoration: none;
     }
+
   </style>
 
 
@@ -52,7 +53,25 @@
         {% endfor %}
       </div>
       <div class="col-9 col-md-10 py-2" id="file_content">
-        <h4>Please make a new project or select an existing project</h4>
+        <!--        <h4>Please make a new project or select an existing project</h4>-->
+
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Filename</th>
+              <th scope="col">Last Edited</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for file in files %}
+            <tr>
+              <td><a href="/projects/{{file[2]}}/{{file[3]}}">{{file[0]}}</a></td>
+              <td>{{file[1]}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
       </div>
     </div>
   </div>
@@ -65,4 +84,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="../static/projects.js"></script>
   <script src="{{url_for('static', filename='projects.js')}}"></script>
-</body></html>
+</body>
+
+</html>
