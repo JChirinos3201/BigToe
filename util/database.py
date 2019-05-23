@@ -225,7 +225,7 @@ class DB_Manager:
         row = (id, projectName)
         self.insertRow('ids', row)
         self.save()
-        self.createPermission(uuid, email)
+        self.createPermission(id, email, True)
         return True
 
     # ==================== permissions FXNS ==========================
@@ -249,20 +249,21 @@ class DB_Manager:
         Returns all of the projects that the email has permission to access
         '''
         c = self.openDB()
-        command = 'SELECT id, email FROM permissions WHERE email={0}'\
+        command = 'SELECT id FROM permissions WHERE email= "{0}"'\
                   .format(email)
+        print(command)
         c.execute(command)
         selectedVal = c.fetchall()
         return dict(selectedVal)
 
-    def createPermission(self, uuid, email):
+    def createPermission(self, uuid, email, new=False):
         '''
         ADDS permission TO permissions table
         '''
         if not self.isInDB('permissions'):
             self.createPermissionsTable()
             self.save()
-        if self.findID(uuid):
+        if new or self.findID(uuid):
             row = (uuid, email)
             self.insertRow('permissions', row)
             # self.createPermission()
@@ -271,7 +272,7 @@ class DB_Manager:
 
 
     def getProjects(self,email):
-        d1=self.getPermissions(email)
+        d1=self.findProjects(email)
         d2=self.getIDs()
         print(d1)
         print(d2)
