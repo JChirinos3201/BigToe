@@ -65,7 +65,7 @@ class DB_Manager:
         c = self.openDB()
         # print(data)
         command = 'INSERT INTO {0} VALUES {1}'.format(tableName, data)
-        print(command)
+        #print(command)
         # print(command)
         c.execute(command)
 
@@ -249,7 +249,7 @@ class DB_Manager:
         Returns all of the projects that the email has permission to access
         '''
         c = self.openDB()
-        command = 'SELECT id FROM permissions WHERE email= "{0}"'\
+        command = 'SELECT id,email FROM permissions WHERE email= "{0}"'\
                   .format(email)
         print(command)
         c.execute(command)
@@ -274,5 +274,10 @@ class DB_Manager:
     def getProjects(self,email):
         d1=self.findProjects(email)
         d2=self.getIDs()
-        print(d1)
-        print(d2)
+        retdic={}
+        #print(d1)
+        #print(d2)
+        for key in d1:
+            if key in d2:
+                retdic[key]=d2[key]
+        return retdic
