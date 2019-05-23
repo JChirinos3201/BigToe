@@ -224,7 +224,8 @@ class DB_Manager:
         print(id)
         row = (id, projectName)
         self.insertRow('ids', row)
-        #self.createPermission(uuid, email)
+        self.save()
+        self.createPermission(uuid, email)
         return True
 
     # ==================== permissions FXNS ==========================
