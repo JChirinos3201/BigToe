@@ -194,6 +194,13 @@ linS -- 2019-05-21 05:46
 - accidentally downloaded ace aka please ignore in commit history :))
 ==============================================================
 
+maryannF -- 2019-05-21 14:07
+--------------------------------------------------------------
+- Began work on getProjects
+- Added tests to make sure that tables exist
+- Corrected table names
+==============================================================
+
 antonD -- 2019-05-21 14:15
 --------------------------------------------------------------
 - Fixed run and delete buttons in navbar
@@ -210,4 +217,15 @@ antonD -- 2019-05-22 14:45
 - No name column error fixed
 - Making a new project now runs without an error, but doesn't
   actually add the project
+==============================================================
+
+maryannF -- 2019-05-22 15:00
+--------------------------------------------------------------
+- Debug createProject
+==============================================================
+
+maryannF -- 2019-05-23 14:07
+--------------------------------------------------------------
+- Finish getProjects
+- Debug createProject, finish createPermission 
 ==============================================================
