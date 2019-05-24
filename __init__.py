@@ -51,8 +51,8 @@ def projects():
         return redirect(url_for('home'))
     email = session['email']
     # GET PROJECTS FROM DB
-    # projects = db.getProjects(email)
-    return render_template('projects.html', email=email, projects=[('sample_id', 'sample_name')])
+    projects = db.getProjects(email)
+    return render_template('projects.html', email=email, projects=projects)
 
 
 @app.route('/get_files/<projectId>')
@@ -65,6 +65,7 @@ def get_files(projectId):
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
     return render_template('snippets/project_files.html',
+                           projectname='Temp Proj Name',
                            files=[('sample filename', 'sample_timestamp',
                                    projectId, 'sample_file_id')])
 
