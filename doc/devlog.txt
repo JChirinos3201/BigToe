@@ -242,3 +242,8 @@ antonD -- 2019-05-24 09:52
 - Added str() around every request.form[]
 - Changed db name in __init__.py from data/toes.db to util/toes.db
 ==============================================================
+
+linS -- 2019-05-24 13:27
+--------------------------------------------------------------
+- Added popup to projects.html and reformatted display layout 
+==============================================================
