@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'beans'
 
 # for testing
-DB_FILE = "data/toes.db"
+DB_FILE = "util/toes.db"
 
 # for running
 # DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
@@ -49,7 +49,7 @@ def projects():
     '''
     if 'email' not in session:
         return redirect(url_for('home'))
-    email = str(session['email'])
+    email = session['email']
     # GET PROJECTS FROM DB
     # projects = db.getProjects(email)
     return render_template('projects.html', email=email, projects=[('sample_id', 'sample_name')])
@@ -82,11 +82,11 @@ def create_new_project():
     '''
     Creates a new project in db then redirects to projects
     '''
-    email = str(session['email'])
+    email = session['email']
     # print("Email: ", email)
     # email = email[1:]
     # print("Email: ", email)
-    name = request.form['project-name']
+    name = str(request.form['project-name'])
 
     db.createProject(name, email)
     db.save()
@@ -101,7 +101,7 @@ def authenticate():
     On failure, flashes and redirects home
     On success, flashes and redirects to project page
     '''
-    email, password = request.form['email'], request.form['password']
+    email, password = str(request.form['email']), str(request.form['password'])
     if len(email.strip()) != 0\
        and len(password.strip()) != 0\
        and db.verifyUser(email, password):
@@ -140,9 +140,9 @@ def register_account():
     Flashes based on success
     Redirects to: home on success, register on failure
     '''
-    email = request.form['email']
-    password = request.form['password']
-    password_verify = request.form['password-verify']
+    email = str(request.form['email'])
+    password = str(request.form['password'])
+    password_verify = str(request.form['password-verify'])
 
     if db.findUser(email):
         flash('Email already registered')
@@ -189,8 +189,8 @@ def change_password():
         return redirect(url_for('home'))
 
     email = session['email']
-    password = request.form['password']
-    password_verify = request.form['password-verify']
+    password = str(request.form['password'])
+    password_verify = str(request.form['password-verify'])
 
     pass_regex_1 = re.compile('[A-Z]+')
     pass_regex_2 = re.compile('[a-z]+')

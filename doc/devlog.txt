@@ -227,5 +227,11 @@ maryannF -- 2019-05-22 15:00
 maryannF -- 2019-05-23 14:07
 --------------------------------------------------------------
 - Finish getProjects
-- Debug createProject, finish createPermission 
+- Debug createProject, finish createPermission
+==============================================================
+
+antonD -- 2019-05-24 09:52
+--------------------------------------------------------------
+- Added str() around every request.form[]
+- Changed db name in __init__.py from data/toes.db to util/toes.db
 ==============================================================
