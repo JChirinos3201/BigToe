@@ -109,7 +109,7 @@ def authenticate():
         return redirect(url_for('projects'))
     # user was found but password is incorrect
     else:
-        flash('Incorrect email or password!')
+        flash('Incorrect email or password!', 'error')
         return redirect(url_for('home'))
 
 
@@ -160,7 +160,7 @@ def register_account():
        password == password_verify:
         db.registerUser(email, password)
         db.save()
-        flash('Successfully registered. You may now log in')
+        flash('Successfully registered. You may now log in', 'success')
         return redirect(url_for('home'))
     else:
         flash('Invalid password')
