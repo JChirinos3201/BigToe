@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'beans'
 
 # for testing
-DB_FILE = "util/toes.db"
+DB_FILE = "data/toes.db"
 
 # for running
 # DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
@@ -51,8 +51,8 @@ def projects():
         return redirect(url_for('home'))
     email = session['email']
     # GET PROJECTS FROM DB
-    # projects = db.getProjects(email)
-    return render_template('projects.html', email=email, projects=[('sample_id', 'sample_name')])
+    projects = db.getProjects(email)
+    return render_template('projects.html', email=email, projects=projects)
 
 
 @app.route('/get_files/<projectId>')
@@ -65,6 +65,7 @@ def get_files(projectId):
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
     return render_template('snippets/project_files.html',
+                           projectname='Temp Proj Name',
                            files=[('sample filename', 'sample_timestamp',
                                    projectId, 'sample_file_id')])
 
@@ -109,7 +110,7 @@ def authenticate():
         return redirect(url_for('projects'))
     # user was found but password is incorrect
     else:
-        flash('Incorrect email or password!')
+        flash('Incorrect email or password!', 'error')
         return redirect(url_for('home'))
 
 
@@ -160,7 +161,7 @@ def register_account():
        password == password_verify:
         db.registerUser(email, password)
         db.save()
-        flash('Successfully registered. You may now log in')
+        flash('Successfully registered. You may now log in', 'success')
         return redirect(url_for('home'))
     else:
         flash('Invalid password')
