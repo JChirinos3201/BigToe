@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'beans'
 
 # for testing
-DB_FILE = "util/toes.db"
+DB_FILE = "data/toes.db"
 
 # for running
 # DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
