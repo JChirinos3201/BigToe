@@ -1,9 +1,45 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">{{projectname}}</a>
-  <a class="fas fa-user-circle fa-2x" id="account_icon" href="/profile"></a>
-</nav>
-<table class="table table-hover border-0">
-  <thead class="thead-dark">
+<table class="table table-hover">
+  <thead class="thead-dark borderless">
+    <tr>
+      <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">{{projectname}}</a>
+        <div class="container-1">
+          <div class="row">
+            <div class="col-4">
+              <button class="btn btn-info w-auto">SHARE</button>
+            </div>
+            <div class="col-8">
+
+              <!-- Button trigger modal -->
+              <button class="btn btn-danger w-auto" data-toggle="modal" data-target="#exModal">DELETE PROJ</button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"> delete project </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      ARE YOU SURE???
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                      <form method="post" action="/delete_file">
+                        <button type="submit" id="delete" class="btn btn-primary">DELETE PROJECT</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </tr>
     <tr>
       <th scope="col">Filename</th>
       <th scope="col">Last Edited</th>
