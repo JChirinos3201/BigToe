@@ -1,4 +1,5 @@
-var file_content = document.getElementById('file_content')
+var file_content = document.getElementById('file_content');
+var collaborators = [];
 
 var show_project = function (projectId) {
   var xhttp = new XMLHttpRequest();
@@ -30,12 +31,17 @@ var add_collaborator = function() {
       alert('Invalid Email Address');
       return;
   }
+  collaborators.push(email)
   var sharegroup = document.getElementById('sharegroup');
   sharegroup.innerHTML = sharegroup.innerHTML + '<button type="button" id="remove' + email + '" onclick="remove_collaborator(\'' + email + '\')" class="btn btn-default">' + email + ' &times;</button>';
   document.getElementById('sharewith').value = "";
 }
 
 var remove_collaborator = function(email) {
+  var index = collaborators.indexOf(email);
+  if (index > -1) {
+    collaborators.splice(index, 1);
+  }
   var element = document.getElementById('remove'+email);
   element.parentNode.removeChild(element);
 }
