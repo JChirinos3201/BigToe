@@ -21,3 +21,21 @@ var show_new_project = function () {
   xhttp.open('GET', '/get_new_project')
   xhttp.send();
 }
+
+var add_collaborator = function() {
+  var email = document.getElementById('sharewith').value;
+  var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+  if (reg.test(email) == false)
+  {
+      alert('Invalid Email Address');
+      return;
+  }
+  var sharegroup = document.getElementById('sharegroup');
+  sharegroup.innerHTML = sharegroup.innerHTML + '<button type="button" id="remove' + email + '" onclick="remove_collaborator(\'' + email + '\')" class="btn btn-default">' + email + ' &times;</button>';
+  document.getElementById('sharewith').value = "";
+}
+
+var remove_collaborator = function(email) {
+  var element = document.getElementById('remove'+email);
+  element.parentNode.removeChild(element);
+}

@@ -6,30 +6,67 @@
         <div class="container-1">
           <div class="row">
             <div class="col-4">
-              <button class="btn btn-info w-auto">SHARE</button>
-            </div>
-            <div class="col-8">
 
               <!-- Button trigger modal -->
-              <button class="btn btn-danger w-auto" data-toggle="modal" data-target="#exModal">DELETE PROJ</button>
+              <button class="btn btn-info w-auto" data-toggle="modal" data-target="#exModal">SHARE</button>
 
               <!-- Modal -->
               <div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"> delete project </h5>
+                      <h5 class="modal-title" id="exampleModalLabel"> Share project with others </h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body">
-                      ARE YOU SURE???
+                      Add collaborator:
+                      <div class="container-1">
+                        <div class="row">
+                          <div class="col-10">
+                            <input type="email" class="form-control" placeholder="Enter email" name="sharewith" id="sharewith">
+                          </div>
+                          <div class="col-0">
+                            <button type="submit" id="add" onclick="add_collaborator()" class="btn btn-info">ADD</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="sharegroup">
+                      </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
-                      <form method="post" action="/delete_file">
-                        <button type="submit" id="delete" class="btn btn-primary">DELETE PROJECT</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                      <form method="post" action="/share_project">
+                        <button type="submit" id="delete" class="btn btn-success">SHARE</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-8">
+
+              <!-- Button trigger modal -->
+              <button class="btn btn-danger w-auto" data-toggle="modal" data-target="#exModal">DELETE PROJECT</button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"> Delete project? </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      This action will permanently delete {{projectname}}.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                      <form method="post" action="/delete_project">
+                        <button type="submit" id="delete" class="btn btn-danger">DELETE PROJECT</button>
                       </form>
                     </div>
                   </div>

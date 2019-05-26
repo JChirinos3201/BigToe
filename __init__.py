@@ -69,7 +69,6 @@ def get_files(projectId):
                            files=[('sample filename', 'sample_timestamp',
                                    projectId, 'sample_file_id')])
 
-
 @app.route('/get_new_project')
 def get_new_project():
     '''
@@ -93,7 +92,6 @@ def create_new_project():
     db.save()
 
     return redirect(url_for('projects'))
-
 
 @app.route('/authenticate', methods=['POST'])
 def authenticate():
