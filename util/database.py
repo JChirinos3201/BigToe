@@ -55,6 +55,13 @@ class DB_Manager:
         c = self.openDB()
         c.execute('CREATE TABLE IF NOT EXISTS permissions(id TEXT,email TEXT)')
 
+    def createFilesTable(self):
+        '''
+        CREATES A 3 COLUMN files table if it doesnt already exist
+        '''
+        c = self.openDB()
+        c.execute('CREATE TABLE IF NOT EXISTS files(id TEXT,name TEXT,content TEXT)')
+
     def insertRow(self, tableName, data):
         '''
         APPENDS data INTO THE TABLE THAT CORRESPONDS WITH tableName
@@ -202,6 +209,11 @@ class DB_Manager:
         selectedVal = c.fetchall()
         return dict(selectedVal)
 
+    def getPname(self,uuid):
+        if not self.findID(uuid):
+            return False
+        return self.getIDs()[uuid]
+
     def findID(self, uuid):
         '''
         CHECKS IF uuid IS UNIQUE
@@ -281,3 +293,19 @@ class DB_Manager:
             if key in d2:
                 retdic[key]=d2[key]
         return retdic
+
+    # ==================== files FXNS ==========================
+
+    def getFiles(self,pid):
+        '''
+        RETURNS A DICTIONARY CONTAINING ALL CURRENT projects
+        AND CORRESPONDING ids
+        '''
+        if not self.isInDB('files'):
+            self.createFilesTable()
+            self.save()
+        # c = self.openDB()
+        # command = 'SELECT id, email FROM permissions'
+        # c.execute(command)
+        # selectedVal = c.fetchall()
+        # return dict(selectedVal)
