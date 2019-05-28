@@ -286,13 +286,13 @@ class DB_Manager:
     def getProjects(self,email):
         d1=self.findProjects(email)
         d2=self.getIDs()
-        retdic={}
+        retlist=[]
         #print(d1)
         #print(d2)
         for key in d1:
             if key in d2:
-                retdic[key]=d2[key]
-        return retdic
+                retlist.append((key,d2[key]))
+        return retlist
 
     # ==================== files FXNS ==========================
 
