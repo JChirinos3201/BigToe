@@ -1,97 +1,52 @@
-<table class="table table-hover">
-  <thead class="thead-dark borderless">
-    <tr>
-      <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">{{projectname}}</a>
-        <div class="container-1">
-          <div class="row">
-            <div class="col-4">
-
-              <!-- Button trigger modal -->
-              <button class="btn btn-info w-auto" data-toggle="modal" data-target="#exModal">SHARE</button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"> Share project with others </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      Add collaborator:
-                      <div class="container-1">
-                        <div class="row">
-                          <div class="col-10">
-                            <input type="email" class="form-control" placeholder="Enter email" name="sharewith" id="sharewith">
-                          </div>
-                          <div class="col-0">
-                            <button type="submit" id="add" onclick="add_collaborator()" class="btn btn-info">ADD</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div id="sharegroup">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                      <form method="post" action="/share_project">
-                        <button type="submit" id="share" class="btn btn-success">SHARE</button>
-                      </form>
-                    </div>
-                  </div>
+        <nav class="navbar nabvbar-dakr bg-dark">
+          <a class="navbar-brand text-white">{{projectname}}</a>
+          <a class="fas fa-cog fa-2x project-links text-black-50" data-toggle="modal" data-target="#settings" href="#"></a>
+          <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings Tab" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Project Settings</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div class="col-8">
-
-              <!-- Button trigger modal -->
-              <button class="btn btn-danger w-auto" data-toggle="modal" data-target="#exModal1">DELETE PROJECT</button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="exModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"> Delete project? </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      This action will permanently delete {{projectname}}.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                      <form method="post" action="/delete_project">
-                        <button type="submit" id="delete-proj" class="btn btn-danger">DELETE PROJECT</button>
-                      </form>
+                <div class="modal-body">
+                  <label for="share-email">Add collaborator:</label>
+                  <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Enter email" name="sharewith" id="sharewith">
+                    <div class="input-group-append">
+                      <button class="btn btn-success" type="button" id="add" onclick="add_collaborator();">Share</button>
                     </div>
                   </div>
+                  <div id="sharegroup">
+                  </div>
+                  <!-- List of collaborators here? -->
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-danger" type="submit">Leave Project</button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </nav>
-    </tr>
-    <tr>
-      <th scope="col">Filename</th>
-      <th scope="col">Last Edited</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="#" class="text-success"><i class="fas fa-plus"></i>&nbsp;New File</a></td>
-      <td></td>
-    </tr>
-    {% for file in files %}
-    <tr>
-      <td><a href="/projects/{{file[2]}}/{{file[3]}}">{{file[0]}}</a></td>
-      <td>{{file[1]}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        </nav>
+
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Filename</th>
+              <th scope="col">Last Edited</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="#" class="text-success"><i class="fas fa-plus"></i>&nbsp;New File</a></td>
+              <td></td>
+            </tr>
+            {% for file in files %}
+            <tr>
+              <td><a href="/projects/{{file[2]}}/{{file[3]}}">{{file[0]}}</a></td>
+              <td>{{file[1]}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>

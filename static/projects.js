@@ -6,6 +6,12 @@ var show_project = function (projectId) {
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       file_content.innerHTML = this.responseText;
+      document.getElementById('sharewith').addEventListener('keyup', function (e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          add_collaborator();
+        }
+      });
     }
   }
   xhttp.open('GET', '/get_files/' + projectId, true);
@@ -23,13 +29,12 @@ var show_new_project = function () {
   xhttp.send();
 }
 
-var add_collaborator = function() {
+var add_collaborator = function () {
   var email = document.getElementById('sharewith').value;
   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-  if (reg.test(email) == false)
-  {
-      alert('Invalid Email Address');
-      return;
+  if (reg.test(email) == false) {
+    alert('Invalid Email Address');
+    return;
   }
   collaborators.push(email)
   var sharegroup = document.getElementById('sharegroup');
@@ -37,11 +42,11 @@ var add_collaborator = function() {
   document.getElementById('sharewith').value = "";
 }
 
-var remove_collaborator = function(email) {
+var remove_collaborator = function (email) {
   var index = collaborators.indexOf(email);
   if (index > -1) {
     collaborators.splice(index, 1);
   }
-  var element = document.getElementById('remove'+email);
+  var element = document.getElementById('remove' + email);
   element.parentNode.removeChild(element);
 }
