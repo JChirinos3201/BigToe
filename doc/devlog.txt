@@ -227,3 +227,12 @@ joanC -- 2019-05-29 11:40
 - Made the file page look nice
 - Added some limited fxnality to file page
 ==============================================================
+
+joanC -- 2019-05-29 12:39
+--------------------------------------------------------------
+- Made add file better
+- Added some placeholder fxns in databasepy
+- Created more functional routes in __init__py
+- Did a lot of js work in projects
+- Made project files better ;3
+==============================================================
