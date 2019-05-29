@@ -52,7 +52,8 @@ def projects():
     email = str(session['email'])
     # GET PROJECTS FROM DB
     projects = db.getProjects(email)
-    return render_template('projects.html', email=email, projects=projects)
+    return render_template('projects.html', email=email,
+                           projects=sorted(projects, key=lambda x: x[1]))
 
 
 @app.route('/get_files/<projectId>')
@@ -64,10 +65,12 @@ def get_files(projectId):
     # files = db.getFiles(projectId) # not quite there yet ;3
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
+    projectName = db.getPname(projectId)
     return render_template('snippets/project_files.html',
+                           projectName=projectName,
                            projectId=projectId,
-                           files=[('Sample Filename', 'Yesterday',
-                                   'some project ID', 'some file ID')])
+                           files=[('sampleFilename', 'Yesterday',
+                                   'sampleProjectId', 'sampleFileId')])
 
 
 @app.route('/get_new_project')
@@ -236,8 +239,10 @@ def file(projectId, fileId):
     filename = db.getFilename(fileId)
     code = db.getCode(fileId)
     projectName = db.getPname(projectId)
-    return render_template('file.html', filename=filename, code=code,
-                           projectName=projectName)
+    return render_template('file.html', filename='sampleFilename',
+                           code='#sample content\ndef foo():\n\treturn 5',
+                           projectName='sampleProjectName')
+
 
 @app.route('/get_code/<fileId>')
 def get_code(fileId):
@@ -252,6 +257,7 @@ def run_code():
     # output = something
     output = '#this is temporary output\n\t#solely for testing purposes'
     return output
+
 
 @app.route('/add_file', methods=["POST"])
 def add_file():
