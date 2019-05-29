@@ -234,6 +234,16 @@ def file(project_id, file_id):
     return render_template('file.html')
 
 
+@app.route('/run_code', methods=['POST'])
+def run_code():
+    code = request.form['code']
+
+    # bleh bleh run code
+    # output = something
+    output = '#this is temporary output\n\t#solely for testing purposes'
+    return output
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

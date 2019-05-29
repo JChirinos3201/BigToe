@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="h-100">
 
 <head>
@@ -33,8 +33,9 @@
       height: 100%;
     }
 
-    .container {
-      width: 50vw;
+    #output {
+      width: 100%;
+      height: 100%;
     }
 
   </style>
@@ -47,26 +48,25 @@
     <a class="fas fa-user-circle fa-2x" id="account_icon" href="/profile"></a>
   </nav>
 
-  <div class="container">
-    <div id="editor"></div>
-  </div>
-
-
-
-  <button onclick="get_text();">Click me to get contents</button>
-  <p id="contents"></p>
-
-  <div class="container-fluid">
-    <div class="pre-scrollable border border-dark">
-      <div class="col-lg-*" id="rightcol">
-        {%run-ned stuff%}
+  <div class="container-fluid p-3">
+    <div class="row border p-1 bg-dark mb-2 px-3 text-light d-flex justify-content-between">
+      <h5 class="m-1">{{filename}}</h5>
+      <button class="btn btn-warning btn-sm" onclick="run_code();">Execute</button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h6 class="m-0">Input</h6>
+        <div id="editor"></div>
+      </div>
+      <div class="col">
+        <h6 class="m-0">Output</h6>
+        <div id="output"></div>
       </div>
     </div>
   </div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="../static/file.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -74,13 +74,24 @@
   <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/javascript");
+    editor.session.setMode("ace/mode/python");
 
-    editor.setOptions({
-      minLines: 30,
-      maxLines: 30
-    });
     editor.session.setUseWrapMode(true);
     editor.setOption("indentedSoftWrap", false);
+    editor.setOption('minLines', 30);
+    editor.setOption('maxLines', 30);
+
+    var output = ace.edit("output");
+    output.setTheme("ace/theme/monokai");
+    output.session.setMode("ace/mode/python");
+
+    output.session.setUseWrapMode(true);
+    output.setOption("indentedSoftWrap", false);
+    output.setOption('minLines', 30);
+    output.setOption('maxLines', 30);
 
   </script>
+  <script src="{{url_for('static', filename='file.js')}}"></script>
+</body>
+
+</html>
