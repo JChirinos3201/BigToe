@@ -229,9 +229,19 @@ def get_collaborators(projectId):
                            collaborators=[])
 
 
-@app.route('/projects/<project_id>/<file_id>')
-def file(project_id, file_id):
-    return render_template('file.html')
+@app.route('/projects/<projectId>/<fileId>')
+def file(projectId, fileId):
+    print(projectId)
+    print(fileId)
+    filename = db.getFilename(fileId)
+    code = db.getCode(fileId)
+    projectName = db.getPname(projectId)
+    return render_template('file.html', filename=filename, code=code,
+                           projectName=projectName)
+
+@app.route('/get_code/<fileId>')
+def get_code(fileId):
+    return db.getCode(fileId)
 
 
 @app.route('/run_code', methods=['POST'])

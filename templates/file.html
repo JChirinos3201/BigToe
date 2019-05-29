@@ -25,7 +25,6 @@
     .project-links:hover {
       text-decoration: none;
     }
-
   </style>
   <style type="text/css" media="screen">
     #editor {
@@ -37,26 +36,25 @@
       width: 100%;
       height: 100%;
     }
-
   </style>
   <title>Projects &bull; Code X Lab</title>
 </head>
 
 <body class="h-100 d-flex flex-column">
   <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Code X Lab</a>
+    <a class="navbar-brand" href="/projects">Code X Lab</a>
     <a class="fas fa-user-circle fa-2x" id="account_icon" href="/profile"></a>
   </nav>
 
   <div class="container-fluid p-3">
     <div class="row border p-1 bg-dark mb-2 px-3 text-light d-flex justify-content-between">
-      <h5 class="m-1">{{filename}}</h5>
+      <h5 class="m-1">{{filename}}<span class="text-muted">&nbsp;| {{projectName}}</span></h5>
       <button class="btn btn-warning btn-sm" onclick="run_code();">Execute</button>
     </div>
     <div class="row">
       <div class="col">
         <h6 class="m-0">Input</h6>
-        <div id="editor"></div>
+        <div id="editor">{{code}}</div>
       </div>
       <div class="col">
         <h6 class="m-0">Output</h6>
@@ -89,9 +87,6 @@
     output.setOption("indentedSoftWrap", false);
     output.setOption('minLines', 30);
     output.setOption('maxLines', 30);
-
   </script>
   <script src="{{url_for('static', filename='file.js')}}"></script>
-</body>
-
-</html>
+</body></html>

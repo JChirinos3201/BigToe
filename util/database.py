@@ -209,19 +209,17 @@ class DB_Manager:
         selectedVal = c.fetchall()
         return dict(selectedVal)
 
-    def getPname(self,uuid):
-        if not self.findID(uuid):
-            return False
-        return self.getIDs()[uuid]
+    def getPname(self, projectId):
+        return self.getIDs().get(projectId, None)
 
-    def findID(self, uuid):
+    def findID(self, projectId):
         '''
         CHECKS IF uuid IS UNIQUE
         '''
         if not self.isInDB('ids'):
             self.createProjectIDTable()
             self.save()
-        return uuid in self.getIDs()
+        return projectId in self.getIDs()
 
     def createProject(self, projectName, email):
         '''
@@ -268,15 +266,15 @@ class DB_Manager:
         selectedVal = c.fetchall()
         return dict(selectedVal)
 
-    def createPermission(self, uuid, email, new=False):
+    def createPermission(self, projectId, email, new=False):
         '''
         ADDS permission TO permissions table
         '''
         if not self.isInDB('permissions'):
             self.createPermissionsTable()
             self.save()
-        if new or self.findID(uuid):
-            row = (uuid, email)
+        if new or self.findID(projectId):
+            row = (projectId, email)
             self.insertRow('permissions', row)
             # self.createPermission()
             return True
@@ -323,3 +321,15 @@ class DB_Manager:
         # c.execute(command)
         # selectedVal = c.fetchall()
         # return dict(selectedVal)
+
+    def getFilename(self, fileId):
+        '''
+        Returns the filename given a file idea
+        '''
+        pass
+
+    def getCode(self, fileId):
+        '''
+        Returns the code stored in a file given the fileId
+        '''
+        pass
