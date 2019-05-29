@@ -47,7 +47,6 @@ class DB_Manager:
         c.execute('CREATE TABLE IF NOT EXISTS ids(id TEXT, name TEXT)')
         # c.execute('INSERT INTO ids VALUES (?, ?)', ('000', 'worm'))
 
-
     def createPermissionsTable(self):
         '''
         CREATES A 2 COLUMN permissions table if it doesnt already exist
@@ -60,7 +59,7 @@ class DB_Manager:
         CREATES A 3 COLUMN files table if it doesnt already exist
         '''
         c = self.openDB()
-        c.execute('CREATE TABLE IF NOT EXISTS files(id TEXT,name TEXT,content TEXT)')
+        c.execute('CREATE TABLE IF NOT EXISTS files(projectId TEXT, fileId TEXT, filename TEXT, content TEXT)')
 
     def insertRow(self, tableName, data):
         '''
@@ -308,7 +307,7 @@ class DB_Manager:
 
     # ==================== files FXNS ==========================
 
-    def getFiles(self,pid):
+    def getFiles(self, projectId):
         '''
         RETURNS A DICTIONARY CONTAINING ALL CURRENT projects
         AND CORRESPONDING ids
@@ -326,11 +325,13 @@ class DB_Manager:
         '''
         Adds a new file given projectId
         '''
-        pass
+        fileId = str(uuid.uuid4())
+        self.insertRow('files', (projectId, fileId, filename, ''))
+        self.save()
 
     def getFilename(self, fileId):
         '''
-        Returns the filename given a file idea
+        Returns the filename given a fileId
         '''
         pass
 
