@@ -283,13 +283,29 @@ class DB_Manager:
         '''
         Returns a list of emails who are associated with a project
         '''
-        pass
+        if not self.isInDB('permissions'):
+            self.createPermissionsTable()
+            self.save()
+        c = self.openDB()
+        command = 'SELECT email FROM permissions WHERE id="{0}"'\
+                  .format(projectId)
+        c.execute(command)
+        selectedVal = c.fetchall()
+        return list(selectedVal)
 
     def addCollaborator(self, projectId, email):
         '''
         Adds an email address as a collaborator on a project
         '''
-        pass
+        if not self.isInDB('permissions'):
+            self.createPermissionsTable()
+            self.save()
+        if self.findID(projectId):
+            row = (projectId, email)
+            self.insertRow('permissions', row)
+            # self.createPermission()
+            return True
+        return False
 
     def getProjects(self,email):
         '''
