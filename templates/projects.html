@@ -1,16 +1,12 @@
 <!doctype html>
 <html lang="en" class="h-100">
-
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
   <style>
     #account_icon {
       text-decoration: none;
@@ -28,18 +24,14 @@
     .project-links:hover {
       text-decoration: none;
     }
-
-    r
   </style>
-
-
   <title>Projects &bull; Code X Lab</title>
 </head>
 
 <body class="h-100 d-flex flex-column">
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Code X Lab</a>
-    <a class="fas fa-user-circle fa-2x" id="account_icon" href="/profile"></a>
+    <a class="fas fa-user-circle fa-2x text-black-50" style="color: Dodgerblue;" id="account_icon" href="/profile"></a>
   </nav>
 
   <div class="container-fluid flex-grow-1">
@@ -47,7 +39,6 @@
       <div class="col-3 col-md-2 bg-light border p-2 text-center overflow-auto h-100">
         <!-- projects go here -->
         <p class="mb-2"><a class="text-success project-links" onclick="show_new_project();" href="#"><i class="fas fa-plus"></i>&nbsp;New Project</a></p>
-
         <!-- projects = [(id, name), (id, name), ..] -->
         {% for project in projects %}
         <p class="my-1"><a href="#" class="project-links" onclick="show_project('{{project[0]}}');">{{project[1]}}</a></p>
@@ -60,32 +51,29 @@
   </div>
 
   <!-- Modal -->
-<div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> create file </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        enter a file name:
-      </div>
-      <div class="modal-footer">
-        <form method="post" action="/delete_file">
-          <div>
-            <input type ="filename" class="form-control" placeholder="desired name" name="filename" id="filename">
-          </div>
-          <button type="submit" id="create" class="btn btn-primary">CREATE FILE</button>
-        </form>
+  <div class="modal fade" id="exModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> create file </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          enter a file name:
+        </div>
+        <div class="modal-footer">
+          <form method="post" action="/delete_file">
+            <div>
+              <input type="filename" class="form-control" placeholder="desired name" name="filename" id="filename">
+            </div>
+            <button type="submit" id="create" class="btn btn-primary">CREATE FILE</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
