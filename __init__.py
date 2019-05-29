@@ -51,8 +51,8 @@ def projects():
         return redirect(url_for('home'))
     email = str(session['email'])
     # GET PROJECTS FROM DB
-    # projects = db.getProjects(email)
-    return render_template('projects.html', email=email, projects=[('sample_id', 'sample_name')])
+    projects = db.getProjects(email)
+    return render_template('projects.html', email=email, projects=projects)
 
 
 @app.route('/get_files/<projectId>')
@@ -61,12 +61,13 @@ def get_files(projectId):
     Gets project files if user is signed in
     '''
     # GET FILES FROM PROJECT FROM DB
-    # files = db.getFiles(projectId)
+    # files = db.getFiles(projectId) # not quite there yet ;3
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
     return render_template('snippets/project_files.html',
-                           files=[('sample filename', 'sample_timestamp',
-                                   projectId, 'sample_file_id')])
+                           projectId=projectId,
+                           files=[('Sample Filename', 'Yesterday',
+                                   'some project ID', 'some file ID')])
 
 
 @app.route('/get_new_project')
@@ -210,6 +211,23 @@ def change_password():
     else:
         flash('Passwords do not match')
     return redirect(url_for('profile'))
+
+
+@app.route('/add_collaborator')
+def add_collaborator():
+    email = request.form['email']
+    projectId = request.form['projectId']
+
+    db.addCollaborator(projectId, email)
+    db.save()
+
+
+@app.route('/get_collaborators/<projectId>')
+def get_collaborators(projectId):
+    collaborators = db.getCollaborators(projectId)
+    return render_template('snippets/collaborators.html',
+                           collaborators=[])
+
 
 @app.route('/projects/<project_id>/<file_id>')
 def file(project_id, file_id):

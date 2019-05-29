@@ -1,5 +1,4 @@
 var file_content = document.getElementById('file_content');
-var collaborators = [];
 var show_project = function (projectId) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -11,11 +10,13 @@ var show_project = function (projectId) {
           add_collaborator();
         }
       });
+      get_collaborators(projectId);
     }
   }
   xhttp.open('GET', '/get_files/' + projectId, true);
   xhttp.send();
 };
+
 var show_new_project = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -23,27 +24,38 @@ var show_new_project = function () {
       file_content.innerHTML = this.responseText;
     }
   }
-  xhttp.open('GET', '/get_new_project')
+  xhttp.open('GET', '/get_new_project', true);
   xhttp.send();
 }
 
-var add_collaborator = function () {
+var get_collaborators = function (projectId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById('collaborators').innerHTML = this.responseText;
+    }
+  }
+  xhttp.open('GET', '/get_collaborators/' + projectId, true);
+  xhttp.send();
+}
+
+var add_collaborator = function (projectId) {
   var email = document.getElementById('sharewith').value;
   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
   if (reg.test(email) == false) {
     alert('Invalid Email Address');
     return;
   }
-  collaborators.push(email)
-  var sharegroup = document.getElementById('sharegroup');
-  sharegroup.innerHTML = sharegroup.innerHTML + '<button type="button" id="remove' + email + '" onclick="remove_collaborator(\'' + email + '\')" class="btn btn-default">' + email + ' &times;</button>';
-  document.getElementById('sharewith').value = "";
-}
-var remove_collaborator = function (email) {
-  var index = collaborators.indexOf(email);
-  if (index > -1) {
-    collaborators.splice(index, 1);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById('sharewith').value = "";
+      get_collaborators(projectId);
+    }
   }
-  var element = document.getElementById('remove' + email);
-  element.parentNode.removeChild(element);
+  var fd = new FormData();
+  fd.append('email', email);
+  fd.append('projectID', projectId);
+  xhttp.open('POST', '/add_collaborator');
+  xhttp.send(fd);
 }

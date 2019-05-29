@@ -1,0 +1,9 @@
+{% if collaborators|length == 0 %}
+Nobody yet. Add a friend!
+{% else %}
+<ul class="list-group">
+  {% for collaborator in collaborators %}
+  <li class="list-group-item py-1">{{collaborator}}</li>
+  {% endfor %}
+</ul>
+{% endif %}

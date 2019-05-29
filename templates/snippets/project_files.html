@@ -1,5 +1,5 @@
 <nav class="navbar nabvbar-dakr bg-dark">
-  <a class="navbar-brand text-white">{{projectname}}</a>
+  <a class="navbar-brand text-white">{{projectName}}</a>
   <a class="fas fa-cog fa-2x project-links text-black-50" data-toggle="modal" data-target="#settings" href="#"></a>
   <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings Tab" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -10,17 +10,19 @@
             <i class="fas fa-times" aria-hidden="true"></i>
           </button>
         </div>
-        <div class="modal-body">
-          <label for="share-email">Add collaborator:</label>
+        <div class="modal-header">
           <div class="input-group">
             <input type="email" class="form-control" placeholder="Enter email" name="sharewith" id="sharewith">
             <div class="input-group-append">
-              <button class="btn btn-success" type="button" id="add" onclick="add_collaborator();">Share</button>
+              <button class="btn btn-success" type="button" id="add" onclick="add_collaborator({{projectId}});">Share</button>
             </div>
           </div>
-          <div id="sharegroup">
+        </div>
+        <div class="modal-body">
+          <label for="collaborators" class="h5">Collaborators</label>
+          <div id="collaborators">
+            <!-- collaborators go here -->
           </div>
-          <!-- List of collaborators here? -->
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger" type="submit">Leave Project</button>

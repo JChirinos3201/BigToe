@@ -282,8 +282,22 @@ class DB_Manager:
             return True
         return False
 
+    def getCollaborators(self, projectId):
+        '''
+        Returns a list of emails who are associated with a project
+        '''
+        pass
+
+    def addCollaborator(self, projectId, email):
+        '''
+        Adds an email address as a collaborator on a project
+        '''
+        pass
 
     def getProjects(self,email):
+        '''
+        Returns a list of tuples for each project
+        '''
         d1=self.findProjects(email)
         d2=self.getIDs()
         retlist=[]
