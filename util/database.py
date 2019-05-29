@@ -322,6 +322,12 @@ class DB_Manager:
         # selectedVal = c.fetchall()
         # return dict(selectedVal)
 
+    def addFile(self, filename, projectId):
+        '''
+        Adds a new file given projectId
+        '''
+        pass
+
     def getFilename(self, fileId):
         '''
         Returns the filename given a file idea

@@ -1,11 +1,12 @@
 <nav class="navbar nabvbar-dakr bg-dark">
   <a class="navbar-brand text-white">{{projectName}}</a>
   <a class="fas fa-cog fa-2x project-links text-black-50" data-toggle="modal" data-target="#settings" href="#"></a>
+  <!-- Settings modal -->
   <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="Settings Tab" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Project Settings</h5>
+          <h5 class="modal-title" id="settingsLabel">Project Settings</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fas fa-times" aria-hidden="true"></i>
           </button>
@@ -41,7 +42,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><a href="#" class="text-success"><i class="fas fa-plus"></i>&nbsp;New File</a></td>
+      <td><a href="#" class="text-success" data-toggle="modal" data-target="#newFile"><i class="fas fa-plus"></i>&nbsp;New File</a></td>
       <td></td>
     </tr>
     {% for file in files %}
@@ -52,3 +53,24 @@
     {% endfor %}
   </tbody>
 </table>
+<div class="modal fade" id="newFile" tabindex="-1" role="dialog" aria-labelledby="newFileModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newFileLabel">New file</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <div class="input-group">
+          <input type="email" class="form-control rounded" placeholder="New filename" name="filename" id="filename" maxlength="30">
+          <div class="input-group-append">
+            <span class="my-auto">.py &nbsp;</span>
+            <button class="btn btn-success" type="button" id="add" onclick="add_file({{projectId}});">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

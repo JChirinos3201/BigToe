@@ -253,6 +253,14 @@ def run_code():
     output = '#this is temporary output\n\t#solely for testing purposes'
     return output
 
+@app.route('/add_file', methods=["POST"])
+def add_file():
+    filename = request.form['filename']
+    projectId = request.form['projectId']
+
+    db.addFile(filename, projectId)
+    db.save()
+
 
 if __name__ == '__main__':
     app.debug = True

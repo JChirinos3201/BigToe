@@ -59,3 +59,24 @@ var add_collaborator = function (projectId) {
   xhttp.open('POST', '/add_collaborator');
   xhttp.send(fd);
 }
+
+var addFile = function (projectId) {
+  var filename = document.getElementById('filename').value;
+  var reg = /\s/;
+  if (reg.test(filename)) {
+    alert('Invalid filename');
+    return;
+  }
+
+  var xhttp_add = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      location.reload();
+    }
+  }
+  var fd = new FormData();
+  fd.append('filename', filename);
+  fd.append('projectId', projectId);
+  xhttp.open('POST', '/add_file');
+  xhttp.send(fd);
+}
