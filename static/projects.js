@@ -52,11 +52,12 @@ var add_collaborator = function (projectId) {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById('sharewith').value = "";
       get_collaborators(projectId);
+      console.log(this.responseText);
     }
   }
   var fd = new FormData();
   fd.append('email', email);
-  fd.append('projectID', projectId);
+  fd.append('projectId', projectId);
   xhttp.open('POST', '/add_collaborator');
   xhttp.send(fd);
 }
