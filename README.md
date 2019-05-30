@@ -26,15 +26,21 @@ __To create a venv...__
 5. You can deactivate your venv by running the command `deactivate`
 6. You can activate the venv from any current working directory by running `source ~/venv_name/bin/activate`
 
-#### Installing Dependencie
+#### Installing Dependencies
 1. If you do not have python3, install python3.6 by typing `sudo apt-get install python3.6`
 2. Clone the repo
 3. After activating the virtual environment,
 install our __dependencies__ with `pip install -r <path-to-file>requirements.txt`
 
-#### Running Our Applications
+
+### On localhost
+#### Running Our Application
 1. Run `python __init__.py` to run the app on your localhost.
 2. Open `localhost:5000` in a browser
+
+## On Apache2
+#### Moving Database
+#### Running Our Application
 
 ## OAuth
 [insert Maryann]
@@ -45,4 +51,4 @@ We are using Python 3 as our primary language to facilitate scripting and to uti
 We use the following __modules__:
 1. __sqlite3__ (to utilize our sqlite3 database `tuesday.db`)
 2. __uuid__ (to create unique identifiers for projects and messages)
-3. 2. __json__ & __request__ 
+3. 2. __json__ & __request__
