@@ -201,9 +201,9 @@ def change_password():
     pass_regex_3 = re.compile('[0-9]+')
     pass_regex_4 = re.compile('^[A-Za-z0-9]{6,}$')
 
-    if pass_regex_1.match(password) and\
-       pass_regex_2.match(password) and\
-       pass_regex_3.match(password) and\
+    if pass_regex_1.search(password) and\
+       pass_regex_2.search(password) and\
+       pass_regex_3.search(password) and\
        pass_regex_4.match(password) and\
        password == password_verify:
         db.changePassword(email, password)
@@ -221,7 +221,7 @@ def add_collaborator():
     email = request.form['email']
     projectId = request.form['projectId']
 
-    db.addCollaborator(projectId, email)
+    db.createPermission(projectId, email)
     db.save()
 
 
@@ -229,7 +229,7 @@ def add_collaborator():
 def get_collaborators(projectId):
     collaborators = db.getCollaborators(projectId)
     return render_template('snippets/collaborators.html',
-                           collaborators=[])
+                           collaborators=collaborators)
 
 
 @app.route('/projects/<projectId>/<fileId>')

@@ -1,4 +1,5 @@
 var file_content = document.getElementById('file_content');
+
 var show_project = function (projectId) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
