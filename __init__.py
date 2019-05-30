@@ -216,13 +216,15 @@ def change_password():
     return redirect(url_for('profile'))
 
 
-@app.route('/add_collaborator')
+@app.route('/add_collaborator', methods=['POST'])
 def add_collaborator():
     email = request.form['email']
     projectId = request.form['projectId']
 
     db.createPermission(projectId, email)
     db.save()
+
+    return 'heh we good ;3'
 
 
 @app.route('/get_collaborators/<projectId>')
