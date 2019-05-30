@@ -231,7 +231,7 @@ class DB_Manager:
         while self.findID(id):  # probably not necessary but might as well
             id = str(uuid.uuid4())
         print(id)
-        row = (id, projectName)
+        row = (id, str(projectName))
         self.insertRow('ids', row)
         self.save()
         self.createPermission(id, email, True)
