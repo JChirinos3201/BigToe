@@ -221,7 +221,7 @@ def add_collaborator():
     email = request.form['email']
     projectId = request.form['projectId']
 
-    db.addCollaborator(projectId, email)
+    db.createPermission(projectId, email)
     db.save()
 
 
@@ -229,7 +229,7 @@ def add_collaborator():
 def get_collaborators(projectId):
     collaborators = db.getCollaborators(projectId)
     return render_template('snippets/collaborators.html',
-                           collaborators=[])
+                           collaborators=collaborators)
 
 
 @app.route('/projects/<projectId>/<fileId>')
