@@ -205,11 +205,24 @@ susanL -- 2019-05-22 00:18
 - integrated ace editor in class
 ==============================================================
 
+maryannF -- 2019-05-22 14:07
+--------------------------------------------------------------
+- create google api credentials
+- began researching general oauth techniques
+==============================================================
+
 antonD -- 2019-05-22 14:45
 --------------------------------------------------------------
 - No name column error fixed
 - Making a new project now runs without an error, but doesn't
   actually add the project
+==============================================================
+
+maryannF -- 2019-05-28 13:00
+--------------------------------------------------------------
+- Worked with Anton and Susan on files db functions
+- Began work on files db functions
+- Researched differences between the available oauth libraries
 ==============================================================
 
 joanC -- 2019-05-29 00:59
@@ -245,4 +258,16 @@ joanC -- 2019-05-29 11:40
 antonD -- 2019-05-29 13:25
 --------------------------------------------------------------
 - getCollaborators() and addCollaborator() should be complete
+==============================================================
+
+maryannF -- 2019-05-29 15:50
+--------------------------------------------------------------
+- began researching authlib (our chosen oauth) library
+- started working on library mvp
+==============================================================
+
+maryannF -- 2019-05-29 22:40
+--------------------------------------------------------------
+- made good progress on authlib library implementation
+- user is sent to google to log in and returns to web app w/ a key
 ==============================================================
