@@ -8,7 +8,7 @@ var show_project = function (projectId) {
       document.getElementById('sharewith').addEventListener('keyup', function (e) {
         if (e.keyCode === 13) {
           e.preventDefault();
-          add_collaborator();
+          add_collaborator(projectId);
         }
       });
       get_collaborators(projectId);
@@ -16,6 +16,21 @@ var show_project = function (projectId) {
   }
   xhttp.open('GET', '/get_files/' + projectId, true);
   xhttp.send();
+};
+
+var leave_project = function (projectId) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      location.reload();
+    }
+  }
+  xhttp.open('POST', '/leave_project', true);
+
+  var fd = new FormData();
+  fd.append('projectId', projectId);
+
+  xhttp.send(fd);
 };
 
 var show_new_project = function () {
@@ -41,6 +56,7 @@ var get_collaborators = function (projectId) {
 }
 
 var add_collaborator = function (projectId) {
+  console.log(projectId);
   var email = document.getElementById('sharewith').value;
   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
   if (reg.test(email) == false) {
@@ -51,6 +67,7 @@ var add_collaborator = function (projectId) {
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById('sharewith').value = "";
+      console.log(projectId);
       get_collaborators(projectId);
       console.log(this.responseText);
     }

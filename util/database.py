@@ -279,6 +279,12 @@ class DB_Manager:
             return True
         return False
 
+    def removePermission(self, projectId, email):
+        '''
+        Removes a users permission for a project
+        '''
+        pass
+
     def getCollaborators(self, projectId):
         '''
         Returns a list of emails who are associated with a project

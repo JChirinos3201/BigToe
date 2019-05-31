@@ -53,7 +53,7 @@ def projects():
     # GET PROJECTS FROM DB
     projects = db.getProjects(email)
     return render_template('projects.html', email=email,
-                           projects=sorted(projects, key=lambda x: x[1]))
+                           projects=sorted(projects, key=lambda x: x[1].lower()))
 
 
 @app.route('/get_files/<projectId>')
@@ -96,6 +96,14 @@ def create_new_project():
     db.save()
 
     return redirect(url_for('projects'))
+
+
+@app.route('/leave_project', methods=["POST"])
+def leave_project():
+    projectId = request.form['projectId']
+    email = session['email']
+    db.removePermission(projectId, email)
+    return 'All good!'
 
 
 @app.route('/authenticate', methods=['POST'])
