@@ -157,13 +157,13 @@ def register_account():
        pass_regex_4.search(password) and\
        password == password_verify:
         if db.registerUser(email, password):
-            flash('Successfully registered. You may now log in')
+            flash('Successfully registered. You may now log in', "success")
             return redirect(url_for('home'))
         else:
-            flash('Email already registered')
+            flash('Email already registered', "danger")
             return redirect(url_for('register'))
     else:
-        flash('Invalid password')
+        flash('Invalid password', "danger")
         return redirect(url_for('register'))
 
 

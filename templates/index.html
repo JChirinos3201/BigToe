@@ -9,6 +9,11 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+  <style>
+    .danger {color:red}
+    .success {color:green}
+  </style>
+
   <title>Code X Lab</title>
 </head>
 
@@ -18,10 +23,11 @@
   <div class="container text-center" style="width: 500px;">
     <h1 class="display-1">Code X Lab</h1>
     <hr>
-    {% set msgs = get_flashed_messages() %}
-    {% for msg in msgs %}
-    <div class="alert alert-danger">{{msg}}</div>
-    {% endfor %}
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in msgs %}
+      <div class="{{category}}">{{msg}}</div>
+      {% endfor %}
+    {% endwith %}
     <div class="card p-2 w-100 border-0">
       <form method="post" action="/authenticate">
         <div class="form-group">
