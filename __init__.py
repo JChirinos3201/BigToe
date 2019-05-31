@@ -221,10 +221,12 @@ def add_collaborator():
     email = request.form['email']
     projectId = request.form['projectId']
 
-    db.createPermission(projectId, email)
-    db.save()
-
-    return 'heh we good ;3'
+    if db.findUser(email):
+        db.createPermission(projectId, email)
+        db.save()
+        return 'heh we good ;3'
+    else:
+        return 'bruh thats not a user!'
 
 
 @app.route('/get_collaborators/<projectId>')

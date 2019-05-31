@@ -257,7 +257,7 @@ joanC -- 2019-05-29 11:40
 
 antonD -- 2019-05-29 13:25
 --------------------------------------------------------------
-- getCollaborators() and addCollaborator() should be complete
+- getCollaborators() and addCollaborator() are complete
 ==============================================================
 
 maryannF -- 2019-05-29 15:50
@@ -275,4 +275,11 @@ maryannF -- 2019-05-29 22:40
 joanC -- 2019-05-30 12:00
 --------------------------------------------------------------
 - I DID IT (code execution now works)
+==============================================================
+
+antonD -- 2019-05-31 00:24
+--------------------------------------------------------------
+- Can't share projects with nonexistent users anymore
+- Found bug where pressing enter to add a collaborator makes
+  the collaborator list disappear.
 ==============================================================
