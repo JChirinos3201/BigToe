@@ -152,9 +152,9 @@ def register_account():
     Flashes based on success
     Redirects to: home on success, register on failure
     '''
-    email = request.form['email']
-    password = request.form['password']
-    password_verify = request.form['password-verify']
+    email = str(request.form['email'])
+    password = str(request.form['password'])
+    password_verify = str(request.form['password-verify'])
 
     if db.findUser(email):
         flash('Email already registered')
