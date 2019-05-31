@@ -283,3 +283,10 @@ antonD -- 2019-05-31 00:24
 - Found bug where pressing enter to add a collaborator makes
   the collaborator list disappear.
 ==============================================================
+
+joanC -- 2019-05-31 08:40
+--------------------------------------------------------------
+- Added base for leaving project
+- Found various simple methods of breaking code execution engine
+	- Will fix later ;3
+==============================================================
