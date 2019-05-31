@@ -3,24 +3,12 @@
 import re
 
 from flask import (Flask, render_template, redirect, url_for,
-                   session, request, flash, get_flashed_messages)
+                   session, request, flash)
 
-from util import database
+from util import db
 
 app = Flask(__name__)
 app.secret_key = 'beans'
-
-# for testing
-DB_FILE = "data/toes.db"
-
-# for running
-# DB_FILE = "/var/www/BigToe/BigToe/data/toes.db"
-
-db = database.DB_Manager(DB_FILE)
-db.createUsersTable()
-db.createProjectIDTable()
-db.createPermissionsTable()
-db.save()
 
 
 @app.route('/', defaults={'path': ''})
@@ -52,8 +40,10 @@ def projects():
     email = str(session['email'])
     # GET PROJECTS FROM DB
     projects = db.getProjects(email)
-    return render_template('projects.html', email=email,
-                           projects=sorted(projects, key=lambda x: x[1].lower()))
+    return render_template('projects.html',
+                           email=email,
+                           projects=sorted(projects,
+                                           key=lambda x: x[1].lower()))
 
 
 @app.route('/get_files/<projectId>')
@@ -65,7 +55,7 @@ def get_files(projectId):
     # files = db.getFiles(projectId) # not quite there yet ;3
     # files = [file, file, file, ...]
     # file = (name, timestamp, projectid, fileid)
-    projectName = db.getPname(projectId)
+    projectName = db.getProjectName(projectId)
     return render_template('snippets/project_files.html',
                            projectName=projectName,
                            projectId=projectId,
@@ -93,7 +83,7 @@ def create_new_project():
     name = request.form['project-name']
 
     db.createProject(name, email)
-    db.save()
+    # db.save()
 
     return redirect(url_for('projects'))
 
@@ -102,7 +92,7 @@ def create_new_project():
 def leave_project():
     projectId = request.form['projectId']
     email = session['email']
-    db.removePermission(projectId, email)
+    db.removeCollaborator(projectId, email)
     return 'All good!'
 
 
@@ -156,10 +146,6 @@ def register_account():
     password = request.form['password']
     password_verify = request.form['password-verify']
 
-    if db.findUser(email):
-        flash('Email already registered')
-        return redirect(url_for('register'))
-
     pass_regex_1 = re.compile('[A-Z]+')
     pass_regex_2 = re.compile('[a-z]+')
     pass_regex_3 = re.compile('[0-9]+')
@@ -170,10 +156,12 @@ def register_account():
        pass_regex_3.search(password) and\
        pass_regex_4.search(password) and\
        password == password_verify:
-        db.registerUser(email, password)
-        db.save()
-        flash('Successfully registered. You may now log in')
-        return redirect(url_for('home'))
+        if db.registerUser(email, password):
+            flash('Successfully registered. You may now log in')
+            return redirect(url_for('home'))
+        else:
+            flash('Email already registered')
+            return redirect(url_for('register'))
     else:
         flash('Invalid password')
         return redirect(url_for('register'))
@@ -215,7 +203,7 @@ def change_password():
        pass_regex_4.match(password) and\
        password == password_verify:
         db.changePassword(email, password)
-        db.save()
+        # db.save()
         flash('Successfully changed password!')
     elif password == password_verify:
         flash('Invalid password')
@@ -229,9 +217,7 @@ def add_collaborator():
     email = request.form['email']
     projectId = request.form['projectId']
 
-    if db.findUser(email):
-        db.createPermission(projectId, email)
-        db.save()
+    if db.addCollaborator(projectId, email):
         return 'heh we good ;3'
     else:
         return 'bruh thats not a user!'
@@ -248,9 +234,9 @@ def get_collaborators(projectId):
 def file(projectId, fileId):
     print(projectId)
     print(fileId)
-    filename = db.getFilename(fileId)
-    code = db.getCode(fileId)
-    projectName = db.getPname(projectId)
+    # filename = db.getFilename(fileId)
+    # code = db.getCode(fileId)
+    # projectName = db.getPname(projectId)
     return render_template('file.html', filename='sampleFilename',
                            code='#sample content\ndef foo():\n\treturn 5',
                            projectName='sampleProjectName')
@@ -263,7 +249,7 @@ def get_code(fileId):
 
 @app.route('/run_code', methods=['POST'])
 def run_code():
-    code = request.form['code']
+    # code = request.form['code']
 
     # bleh bleh run code
     # output = something
@@ -277,7 +263,7 @@ def add_file():
     projectId = request.form['projectId']
 
     db.addFile(filename, projectId)
-    db.save()
+    # db.save()
 
 
 if __name__ == '__main__':

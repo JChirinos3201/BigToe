@@ -89,7 +89,7 @@ def changePassword(email, new_password):
 # ==================== project fxns ====================
 
 
-def getProjects():
+def getProjectIds():
     '''
     Returns a dict of all ids and projects
     '''
@@ -105,7 +105,7 @@ def getProjectName(projectId):
     '''
     Returns the name of a project given an id
     '''
-    return getProjects().get(projectId, None)
+    return getProjectIds().get(projectId, None)
 
 
 def createProject(name, email):
@@ -118,7 +118,7 @@ def createProject(name, email):
     id = str(uuid.uuid4())
 
     # make sure we don't have a duplicate id (unlikely, but possible)
-    all_ids = getProjects().keys()
+    all_ids = getProjectIds().keys()
     while id in all_ids:
         id = str(uuid.uuid4())
 
@@ -190,6 +190,23 @@ def getCollaborators(projectId):
     return email_list
 
 
+def getProjects(email):
+    '''
+    Returns a list of tuples for each project
+    '''
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute('SELECT id, name FROM projects')
+    projects = c.fetchall()
+
+    c.execute('SELECT id FROM permissions WHERE email=?', (email,))
+    ids = [x[0] for x in c.fetchall()]
+
+    projects = list(filter(lambda x: x[0]in ids, projects))
+
+    return projects
+
+
 # ==================== file fxns ====================
 
 
@@ -256,3 +273,7 @@ def updateCode(fileId, patches):
     Updates code given patches to apply
     '''
     pass
+
+
+if __name__ == '__main__':
+    create_db()
