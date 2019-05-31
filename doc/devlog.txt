@@ -290,3 +290,9 @@ joanC -- 2019-05-31 08:40
 - Found various simple methods of breaking code execution engine
 	- Will fix later ;3
 ==============================================================
+
+joanC -- 2019-05-31 12:22
+--------------------------------------------------------------
+- Rewrote database.py (OOP) to db.py (not OOP) for Susan due to
+  technical malfunctions
+==============================================================
