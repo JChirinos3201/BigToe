@@ -263,8 +263,9 @@ def getCode(fileId):
     c = db.cursor()
     c.execute('SELECT content FROM files WHERE fileId=?', (fileId,))
     tuple = c.fetchall()
+    print(tuple)
     if tuple == []:
-        return False
+        return ''
     return tuple[0][0]
 
 
@@ -272,7 +273,15 @@ def updateCode(fileId, patches):
     '''
     Updates code given patches to apply
     '''
+    # temporarily will just change the code to the patches
     pass
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    c.execute('UPDATE files SET content=? WHERE fileId=?', (patches, fileId))
+
+    db.commit()
+    db.close()
 
 
 if __name__ == '__main__':

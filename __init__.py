@@ -60,7 +60,7 @@ def get_files(projectId):
                            projectName=projectName,
                            projectId=projectId,
                            files=[('sampleFilename', 'Yesterday',
-                                   'sampleProjectId', 'sampleFileId')])
+                                   'sampleProjectId', 'fid')])
 
 
 @app.route('/get_new_project')
@@ -239,12 +239,17 @@ def file(projectId, fileId):
     # projectName = db.getPname(projectId)
     return render_template('file.html', filename='sampleFilename',
                            code='#sample content\ndef foo():\n\treturn 5',
-                           projectName='sampleProjectName')
+                           projectName='sampleProjectName',
+                           projectId=projectId,
+                           fileId=fileId)
 
 
-@app.route('/get_code/<fileId>')
-def get_code(fileId):
-    return db.getCode(fileId)
+@app.route('/get_code', methods=['POST'])
+def get_code():
+    fileId = request.form['fileId']
+    code = db.getCode(fileId)
+    print(code)
+    return code
 
 
 @app.route('/run_code', methods=['POST'])
@@ -264,6 +269,16 @@ def add_file():
 
     db.addFile(filename, projectId)
     # db.save()
+
+
+@app.route('/update_code', methods=['POST'])
+def update_code():
+    code = request.form['code']
+    fileId = request.form['fileId']
+
+    db.updateCode(fileId, code)
+
+    return 'All good!'
 
 
 if __name__ == '__main__':
