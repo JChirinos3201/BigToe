@@ -142,9 +142,9 @@ def register_account():
     Flashes based on success
     Redirects to: home on success, register on failure
     '''
-    email = request.form['email']
-    password = request.form['password']
-    password_verify = request.form['password-verify']
+    email = str(request.form['email'])
+    password = str(request.form['password'])
+    password_verify = str(request.form['password-verify'])
 
     pass_regex_1 = re.compile('[A-Z]+')
     pass_regex_2 = re.compile('[a-z]+')
@@ -157,13 +157,13 @@ def register_account():
        pass_regex_4.search(password) and\
        password == password_verify:
         if db.registerUser(email, password):
-            flash('Successfully registered. You may now log in')
+            flash('Successfully registered. You may now log in', "success")
             return redirect(url_for('home'))
         else:
-            flash('Email already registered')
+            flash('Email already registered', "danger")
             return redirect(url_for('register'))
     else:
-        flash('Invalid password')
+        flash('Invalid password', "danger")
         return redirect(url_for('register'))
 
 
