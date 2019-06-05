@@ -51,4 +51,4 @@ We are using Python 3 as our primary language to facilitate scripting and to uti
 We use the following __modules__:
 1. __sqlite3__ (to utilize our sqlite3 database `tuesday.db`)
 2. __uuid__ (to create unique identifiers for projects and messages)
-3. 2. __json__ & __request__
+3. __json__ & __request__
