@@ -160,7 +160,11 @@ def addCollaborator(projectId, email):
     '''
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
+    if not email in getUsers():
+        # print("User doesn't exist") #Flash this to user somehow
+        return False
     if projectId in findProjects(email):
+        # print("User already added") #Flash this to user somehow
         return False
     c.execute('INSERT INTO permissions VALUES(?, ?)', (projectId, email))
     db.commit()
@@ -174,7 +178,7 @@ def removeCollaborator(projectId, email):
     '''
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute('DELETE FROM permissions WHERE email=?', (email,))
+    c.execute('DELETE FROM permissions WHERE id=? AND email=?', (projectId, email))
     db.commit()
     db.close()
 

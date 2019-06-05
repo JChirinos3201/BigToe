@@ -262,7 +262,7 @@ antonD -- 2019-05-29 13:25
 
 susanL -- 2019-05-30 13:26
 --------------------------------------------------------------
-- Wrote db functions for file 
+- Wrote db functions for file
 ==============================================================
 
 maryannF -- 2019-05-29 15:50
@@ -306,4 +306,10 @@ joanC -- 2019-05-31 12:22
 --------------------------------------------------------------
 - Rewrote database.py (OOP) to db.py (not OOP) for Susan due to
   technical malfunctions
+==============================================================
+
+antonD -- 2019-06-05 00:45
+--------------------------------------------------------------
+- Can't share projects with nonexistent users anymore (using new db)
+- Fixed error where leaving one project would remove user form all projects
 ==============================================================
