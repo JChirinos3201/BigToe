@@ -2,6 +2,8 @@ import uuid
 
 import sqlite3
 
+from util import diff_match_patch as dmp
+
 DB_FILE = 'data/toes.db'
 
 # for running (?)
@@ -160,7 +162,7 @@ def addCollaborator(projectId, email):
     '''
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    if not email in getUsers():
+    if email not in getUsers():
         # print("User doesn't exist") #Flash this to user somehow
         return False
     if projectId in findProjects(email):
@@ -178,7 +180,8 @@ def removeCollaborator(projectId, email):
     '''
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute('DELETE FROM permissions WHERE id=? AND email=?', (projectId, email))
+    c.execute('DELETE FROM permissions WHERE id=? AND email=?',
+              (projectId, email))
     db.commit()
     db.close()
 
@@ -273,16 +276,14 @@ def getCode(fileId):
     return tuple[0][0]
 
 
-def updateCode(fileId, patches):
+def updateCode(fileId, code):
     '''
     Updates code given patches to apply
     '''
-    # temporarily will just change the code to the patches
-    pass
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
 
-    c.execute('UPDATE files SET content=? WHERE fileId=?', (patches, fileId))
+    c.execute('UPDATE files SET content=? WHERE fileId=?', (code, fileId))
 
     db.commit()
     db.close()
