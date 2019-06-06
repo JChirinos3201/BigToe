@@ -1,8 +1,10 @@
-import uuid
+import uuid, datetime
 
 import sqlite3
 
+
 from util import diff_match_patch as dmp
+
 
 DB_FILE = 'data/toes.db'
 
@@ -22,6 +24,9 @@ def create_db():
 
     c.execute('CREATE TABLE IF NOT EXISTS projects(id TEXT PRIMARY KEY, \
               name TEXT)')
+
+    c.execute('CREATE TABLE IF NOT EXISTS drivers(fileId TEXT, \
+                        driver TEXT, times TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS permissions(id TEXT, email TEXT)')
 
@@ -288,6 +293,29 @@ def updateCode(fileId, code):
     db.commit()
     db.close()
 
+def getDriver(fileId):
+    '''
+    returns current driver of specified file
+    '''
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    c.execute('SELECT driver FROM drivers WHERE fileId=?', (fileId,))
+
+    email = c.fetchone()
+    return email
+
+def updateDriver(fileId, email):
+    '''
+    updates current driver of specified file
+    '''
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    c.execute('UPDATE drivers SET driver=? WHERE fileId=?', (email, fileId))
+
+    db.commit()
+    db.close()
 
 if __name__ == '__main__':
     create_db()

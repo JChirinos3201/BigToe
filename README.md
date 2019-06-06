@@ -39,8 +39,51 @@ install our __dependencies__ with `pip install -r <path-to-file>requirements.txt
 2. Open `localhost:5000` in a browser
 
 ## On Apache2
-#### Moving Database
-#### Running Our Application
+0. Set up an Ubuntu droplet
+1. Run `$ sudo apt install apache2`, followed by `$ sudo ufw allow in "Apache Full"`
+2. Run `$ sudo apt-get install libapache2-mod-wsgi-py3`
+3. Clone repo into `/var/www/BigToe/`, creating directories as needed
+4. Run `$ sudo apt-get install python3-pip`
+5. Run `$ sudo apt install python3-flask`
+6. Write the following into `/etc/apache2/sites-available/BigToe.conf`
+
+```
+<VirtualHost *:80>
+                ServerName 206.81.1.145
+                ServerAdmin admin@206.81.1.145
+                WSGIScriptAlias / /var/www/BigToe/bigtoe.wsgi
+                <Directory /var/www/BigToe/BigToe/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                Alias /static /var/www/BigToe/BigToe/static
+                <Directory /var/www/BigToe/BigToe/static/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                ErrorLog ${APACHE_LOG_DIR}/error.log
+                LogLevel warn
+                CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+7. Run `$ sudo a2ensite BigToe`
+8. Write the following into `/var/www/BigToe/bigtoe.wsgi`
+
+```
+#!/usr/bin/python3
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, '/var/www/BigToe/')
+sys.path.insert(1, '/var/www/BigToe/BigToe')
+
+from BigToe import app as application
+application.secret_key = 'Add your secret key'
+```
+
+9. From `/var/www/BigToe/BigToe/`, run `$ python3 util/db.py`
+10. Run `$ sudo service apache2 restart`
 
 ## OAuth
 [insert Maryann]
@@ -51,4 +94,4 @@ We are using Python 3 as our primary language to facilitate scripting and to uti
 We use the following __modules__:
 1. __sqlite3__ (to utilize our sqlite3 database `tuesday.db`)
 2. __uuid__ (to create unique identifiers for projects and messages)
-3. 2. __json__ & __request__
+3. __json__ & __request__

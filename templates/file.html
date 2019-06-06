@@ -49,9 +49,9 @@
   <div class="container-fluid p-3">
     <div class="row border p-1 bg-dark mb-2 px-3 text-light d-flex justify-content-between">
       <h5 class="m-1">{{filename}}<span class="text-muted">&nbsp;| {{projectName}}</span></h5>
-      <button class="btn btn-primary btn-sm" onclick="get_code('{{fileId}}');">Get Code (FOR TESTING ONLY)</button>
-      <button class="btn btn-info btn-sm" onclick="send_code('{{fileId}}');">Send Code (FOR TESTING ONLY)</button>
-      <button class="btn btn-warning btn-sm" onclick="run_code('{{fileId}}');">Execute</button>
+      <button class="btn btn-primary btn-sm" onclick="get_code();">Get Code (FOR TESTING ONLY)</button>
+      <button class="btn btn-info btn-sm" onclick="send_code());">Send Code (FOR TESTING ONLY)</button>
+      <button class="btn btn-warning btn-sm" onclick="run_code();">Execute</button>
     </div>
     <div class="row">
       <div class="col">
@@ -90,5 +90,12 @@
     output.setOption('minLines', 30);
     output.setOption('maxLines', 30);
   </script>
-  <script src="{{url_for('static', filename='file.js')}}"></script>
+  <script src="{{url_for('static', filename='diff_match_patch.js')}}"></script>
+  <script>
+    var fileId = '{{fileId}}';
+  </script>
+  <script src="{{url_for('static', filename='file.js')}}" onload="get_code(false);">
+  </script>
+  <!--  <script src="../static/file.js" onload="get_code('{{fileId}}')"></script>-->
+  <!--  <script src="../static/diff_match_patch.js"></script>-->
 </body></html>
