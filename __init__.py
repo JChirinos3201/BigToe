@@ -318,8 +318,10 @@ def take_control():
 
 @app.route('/relinquish_control', methods=['POST'])
 def relinquish_control():
+    email = session['email']
     fileId = request.form['fileId']
-    db.updateDriver(fileId, 'None')
+    if db.getDriver(fileId) == email:
+        db.updateDriver(fileId, 'None')
     return 'good!'
 
 
