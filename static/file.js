@@ -43,7 +43,7 @@ var update_code = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      return
+      return;
     }
   };
   var fd = new FormData();
@@ -167,5 +167,7 @@ var spectator = function (driver_exists) {
       d.innerHTML = '<button class="btn btn-sm btn-warning" disabled>Take control</button>';
     }
   }
-  get_code(fileId);
+  get_code();
 }
+get_code();
+loop();
