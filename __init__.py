@@ -283,13 +283,6 @@ def update_code():
     return 'All good!'
 
 
-@app.route('/check_diff_match_patch', methods=['POST'])
-def check():
-    patches = request.form['patches']
-    print(patches)
-    return 'bleh!'
-
-
 @app.route('/is_driver', methods=['POST'])
 def is_driver():
     fileId = request.form['fileId']
