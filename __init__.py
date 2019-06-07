@@ -281,6 +281,24 @@ def update_code():
     return 'All good!'
 
 
+@app.route('/check_diff_match_patch', methods=['POST'])
+def check():
+    patches = request.form['patches']
+    print(patches)
+    return 'bleh!'
+
+
+@app.route('/is_driver', methods=['POST'])
+def is_driver():
+    fileId = request.form['fileId']
+    email = session['email']
+    driver = db.getDriver(fileId)
+    if email == driver:
+        return 'yes you are driver!!!'
+    else:
+        return ''
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
