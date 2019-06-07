@@ -45,19 +45,16 @@ def redirect():
     session = OAuth2Session(k, s,redirect_uri='http://localhost:5000/second')
 
     oauth2_tokens = session.fetch_access_token(ACCESS_TOKEN_URI,authorization_response=flask.request.url)
+    print("OAUTH TOKEN:  ")
     print(oauth2_tokens)
     flask.session["auth_token"]=oauth2_tokens
-
-    return flask.redirect("third")
-
-@app.route("/third")
-def tryingMyBest():
-    please = OAuth2Session(k, token=flask.session["auth_token"])
-    h=please.get("https://www.googleapis.com/auth/userinfo.email/json")
+    h=session.get("https://people.googleapis.com/v1/people/me?personFields=emailAddresses")
     print(h)
-    h=h.json()
-    print(h)
-    return flask.render_template("oauth.html",something=h)
+    try:
+        email=h.json()["emailAddresses"][0]["value"]
+        return flask.render_template("oauth.html",something=email)
+    except:
+        return flask.redirect("/")
 
 if __name__ == "__main__":
     app.debug = True
