@@ -43,7 +43,7 @@ var update_code = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      continue;
+      return;
     }
   };
   var fd = new FormData();
@@ -57,7 +57,7 @@ var send_code = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      console.log('sent!');
+      //      console.log('sent!');
     }
   };
   var fd = new FormData();
@@ -90,32 +90,84 @@ var get_code = function () {
   xhttp.send(fd);
 }
 
+var relinquish_control = function () {
+  //  console.log('RELINQUISHING CONTROL');
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.response == 200) {
+      driver = false;
+    }
+  };
+  var fd = new FormData();
+  fd.append('fileId', fileId);
+  xhttp.open('POST', '/relinquish_control', true);
+  xhttp.send(fd);
+};
+
+var take_control = function () {
+  //  console.log('TAKING CONTROL');
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.response == 200) {
+      if (this.responseText) {
+        driver = true;
+      } else {
+        driver = false;
+      }
+    }
+  };
+  var fd = new FormData();
+  fd.append('fileId', fileId);
+  xhttp.open('POST', '/take_control', true);
+  xhttp.send(fd);
+};
+
 var loop = function () {
   // check if driver
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      if (this.responseText) {
+      var r = this.responseText;
+      //      console.log(r);
+      if (r == 'no driver') {
+        spectator(false);
+      } else if (r == 'driver') {
         driver();
       } else {
-        spectator();
+        spectator(true);
       }
-    }
-    sleep(500).then(() => {
       requestId = window.requestAnimationFrame(loop);
-    });
+    }
   };
-
   var fd = new FormData();
   fd.append('fileId', fileId);
   xhttp.open('POST', '/is_driver', true);
-  xhttp.send(fd);
+  sleep(500).then(() => {
+    xhttp.send(fd);
+  });
 }
 
 var driver = function () {
+  var d = document.getElementById('control-button');
+  //  console.log(d.innerHTML);
+  if (d.innerHTML != '<button class="btn btn-sm btn-warning" onclick="relinquish_control();"> Relinquish Control</button>') {
+    d.innerHTML = '<button class="btn btn-sm btn-warning" onclick="relinquish_control();"> Relinquish Control</button>';
+  }
   send_code();
 }
 
-var spectator = function () {
-  get_code(fileId);
+var spectator = function (driver_exists) {
+  var d = document.getElementById('control-button');
+  if (!driver_exists) {
+    if (d.innerHTML != '<button class="btn btn-sm btn-warning" onclick="take_control();">Take control</button>') {
+      d.innerHTML = '<button class="btn btn-sm btn-warning" onclick="take_control();">Take control</button>';
+    }
+  } else {
+    if (d.innerHTML != '<button class="btn btn-sm btn-warning" disabled>Take control</button>') {
+      d.innerHTML = '<button class="btn btn-sm btn-warning" disabled>Take control</button>';
+    }
+  }
+  get_code();
 }
+get_code();
+loop();

@@ -1,9 +1,6 @@
-import uuid, datetime
+import uuid, time
 
 import sqlite3
-
-
-from util import diff_match_patch as dmp
 
 
 DB_FILE = 'data/toes.db'
@@ -26,12 +23,13 @@ def create_db():
               name TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS drivers(fileId TEXT, \
-                        driver TEXT, times TEXT)')
+                        driver TEXT, times REAL)')
 
     c.execute('CREATE TABLE IF NOT EXISTS permissions(id TEXT, email TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS files(projectId TEXT, \
-              fileId TEXT PRIMARY KEY, filename TEXT, content TEXT)')
+              fileId TEXT PRIMARY KEY, filename TEXT, content TEXT,\
+              times REAL)')
 
     db.commit()
     db.close()
@@ -228,8 +226,8 @@ def getFiles(projectId):
     '''
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute('SELECT fileId, filename, content FROM files WHERE projectId=?',
-              (projectId,))
+    c.execute('SELECT fileId, filename, content, times FROM files\
+              WHERE projectId=?', (projectId,))
     t = c.fetchall()
     return t
 
@@ -243,12 +241,18 @@ def addFile(filename, projectId):
     fileId = str(uuid.uuid4())
 
     # make sure there are no duplicate file ids (unlikely, but possible)
-    currentIds = [x[0] for x in getFiles()]
+    currentIds = [x[0] for x in getFiles(projectId)]
     while fileId in currentIds:
         fileId = str(uuid.uuid4())
 
-    c.execute('INSERT INTO files VALUES(?, ?, ?, ?)',
-              (projectId, fileId, filename, ''))
+    t = time.time()
+
+    c.execute('INSERT INTO files VALUES(?, ?, ?, ?, ?)',
+              (projectId, fileId, filename, '', t))
+
+    c.execute('INSERT INTO drivers VALUES(?, ?, ?)',
+              (fileId, 'None', t))
+
     db.commit()
     db.close()
     return True
@@ -260,7 +264,7 @@ def getFilename(fileId):
     '''
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
-    c.execute('SELECT name FROM files WHERE fileId=?', (fileId,))
+    c.execute('SELECT filename FROM files WHERE fileId=?', (fileId,))
     tuple = c.fetchall()
     if tuple == []:
         return False
@@ -288,10 +292,15 @@ def updateCode(fileId, code):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
 
+    t = time.time()
+
     c.execute('UPDATE files SET content=? WHERE fileId=?', (code, fileId))
+    c.execute('UPDATE drivers SET times=? WHERE fileId=?', (t, fileId))
+    c.execute('UPDATE files SET times=? WHERE fileId=?', (t, fileId))
 
     db.commit()
     db.close()
+
 
 def getDriver(fileId):
     '''
@@ -302,8 +311,10 @@ def getDriver(fileId):
 
     c.execute('SELECT driver FROM drivers WHERE fileId=?', (fileId,))
 
-    email = c.fetchone()
+    email = c.fetchone()[0]
+    print(email, 'this is from db')
     return email
+
 
 def updateDriver(fileId, email):
     '''
@@ -313,9 +324,12 @@ def updateDriver(fileId, email):
     c = db.cursor()
 
     c.execute('UPDATE drivers SET driver=? WHERE fileId=?', (email, fileId))
+    c.execute('UPDATE drivers SET times=? WHERE fileId=?',
+              (time.time(), fileId))
 
     db.commit()
     db.close()
+
 
 if __name__ == '__main__':
     create_db()
