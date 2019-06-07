@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import re
+import datetime
 
 from flask import (Flask, render_template, redirect, url_for,
                    session, request, flash)
@@ -51,16 +52,16 @@ def get_files(projectId):
     '''
     Gets project files if user is signed in
     '''
-    # GET FILES FROM PROJECT FROM DB
-    # files = db.getFiles(projectId) # not quite there yet ;3
-    # files = [file, file, file, ...]
-    # file = (name, timestamp, projectid, fileid)
     projectName = db.getProjectName(projectId)
+    files = [list(i) for i in
+             sorted(db.getFiles(projectId), key=lambda x: x[1])]
+    for file in files:
+        file[3] = datetime.datetime.fromtimestamp(file[3])\
+                  .strftime('%I:%M:%S %p | %b %d %Y')
     return render_template('snippets/project_files.html',
                            projectName=projectName,
                            projectId=projectId,
-                           files=[('sampleFilename', 'Yesterday',
-                                   'sampleProjectId', 'fid')])
+                           files=files)
 
 
 @app.route('/get_new_project')
@@ -234,12 +235,13 @@ def get_collaborators(projectId):
 def file(projectId, fileId):
     print(projectId)
     print(fileId)
-    # filename = db.getFilename(fileId)
-    # code = db.getCode(fileId)
-    # projectName = db.getPname(projectId)
-    return render_template('file.html', filename='sampleFilename',
-                           code='#sample content\ndef foo():\n\treturn 5',
-                           projectName='sampleProjectName',
+    filename = db.getFilename(fileId)
+    code = db.getCode(fileId)
+    projectName = db.getProjectName(projectId)
+    return render_template('file.html',
+                           filename=filename,
+                           code=code,
+                           projectName=projectName,
                            projectId=projectId,
                            fileId=fileId)
 
@@ -268,7 +270,7 @@ def add_file():
     projectId = request.form['projectId']
 
     db.addFile(filename, projectId)
-    # db.save()
+    return 'all good I think'
 
 
 @app.route('/update_code', methods=['POST'])
@@ -293,10 +295,32 @@ def is_driver():
     fileId = request.form['fileId']
     email = session['email']
     driver = db.getDriver(fileId)
-    if email == driver:
-        return 'yes you are driver!!!'
+    print('driver: ', driver)
+    print('check: ', email)
+    if driver == 'None':
+        return 'no driver'
+    elif email == driver:
+        return 'driver'
+    else:
+        return 'spectator'
+
+
+@app.route('/take_control', methods=['POST'])
+def take_control():
+    fileId = request.form['fileId']
+    email = session['email']
+    if db.getDriver(fileId) == 'None':
+        db.updateDriver(fileId, email)
+        return 'all good!'
     else:
         return ''
+
+
+@app.route('/relinquish_control', methods=['POST'])
+def relinquish_control():
+    fileId = request.form['fileId']
+    db.updateDriver(fileId, 'None')
+    return 'good!'
 
 
 if __name__ == '__main__':

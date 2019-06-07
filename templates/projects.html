@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" class="h-100">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -24,6 +25,7 @@
     .project-links:hover {
       text-decoration: none;
     }
+
   </style>
   <title>Projects &bull; Code X Lab</title>
 </head>
@@ -41,7 +43,7 @@
         <p class="mb-2"><a class="text-success project-links" onclick="show_new_project();" href="#"><i class="fas fa-plus"></i>&nbsp;New Project</a></p>
         <!-- projects = [(id, name), (id, name), ..] -->
         {% for project in projects %}
-        <p class="my-1"><a href="#" class="project-links" onclick="show_project('{{project[0]}}');">{{project[1]}}</a></p>
+        <p class="my-1"><a href="#" class="project-links" onclick="setProjectId('{{project[0]}}'); show_project('{{project[0]}}');">{{project[1]}}</a></p>
         {% endfor %}
       </div>
       <div class="col-9 col-md-10 py-2" id="file_content">
@@ -57,4 +59,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="../static/projects.js"></script>
   <script src="{{url_for('static', filename='projects.js')}}"></script>
-</body></html>
+</body>
+
+</html>

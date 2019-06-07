@@ -1,6 +1,11 @@
 var file_content = document.getElementById('file_content');
+var projectId;
 
-var show_project = function (projectId) {
+var setProjectId = function (newProjectId) {
+  projectId = newProjectId;
+};
+
+var show_project = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -18,7 +23,7 @@ var show_project = function (projectId) {
   xhttp.send();
 };
 
-var leave_project = function (projectId) {
+var leave_project = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -33,6 +38,10 @@ var leave_project = function (projectId) {
   xhttp.send(fd);
 };
 
+var new_file = function () {
+
+};
+
 var show_new_project = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
@@ -44,7 +53,7 @@ var show_new_project = function () {
   xhttp.send();
 }
 
-var get_collaborators = function (projectId) {
+var get_collaborators = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -55,7 +64,7 @@ var get_collaborators = function (projectId) {
   xhttp.send();
 }
 
-var add_collaborator = function (projectId) {
+var add_collaborator = function () {
   console.log(projectId);
   var email = document.getElementById('sharewith').value;
   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -79,7 +88,7 @@ var add_collaborator = function (projectId) {
   xhttp.send(fd);
 }
 
-var addFile = function (projectId) {
+var add_file = function () {
   var filename = document.getElementById('filename').value;
   var reg = /\s/;
   if (reg.test(filename)) {
@@ -87,7 +96,7 @@ var addFile = function (projectId) {
     return;
   }
 
-  var xhttp_add = new XMLHttpRequest();
+  var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       location.reload();
