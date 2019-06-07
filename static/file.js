@@ -142,7 +142,7 @@ var loop = function () {
   var fd = new FormData();
   fd.append('fileId', fileId);
   xhttp.open('POST', '/is_driver', true);
-  sleep(500).then(() => {
+  sleep(100).then(() => {
     xhttp.send(fd);
   });
 }

@@ -75,10 +75,15 @@ var add_collaborator = function () {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById('sharewith').value = "";
-      console.log(projectId);
-      get_collaborators(projectId);
-      console.log(this.responseText);
+      var r = this.responseText;
+      if (r == 'bruh thats not a user!') {
+        alert("User doesn't exist!");
+      } else {
+        document.getElementById('sharewith').value = "";
+        console.log(projectId);
+        get_collaborators(projectId);
+        console.log(r);
+      }
     }
   }
   var fd = new FormData();
