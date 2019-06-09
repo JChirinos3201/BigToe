@@ -2,10 +2,9 @@ import uuid, time
 
 import sqlite3
 
+DB_FILE = 'toes.db'
 
-# DB_FILE = 'data/toes.db'
-
-DB_FILE = '/var/www/BigToe/BigToe/data/toes.db'
+#DB_FILE = '/var/www/BigToe/BigToe/data/toes.db'
 
 
 def create_db():
@@ -17,6 +16,8 @@ def create_db():
 
     c.execute('CREATE TABLE IF NOT EXISTS users(email TEXT PRIMARY KEY, \
               password TEXT)')
+
+    c.execute('CREATE TABLE IF NOT EXISTS google(email TEXT PRIMARY KEY)')
 
     c.execute('CREATE TABLE IF NOT EXISTS projects(id TEXT PRIMARY KEY, \
               name TEXT)')
@@ -88,6 +89,48 @@ def changePassword(email, new_password):
     db.commit()
     db.close()
     return True
+
+# =================== google fxns ====================
+
+
+def getGUsers():
+    '''
+    Returns a dict of G users
+    '''
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    c.execute('SELECT email FROM google')
+    tuples = c.fetchall()
+    ret=[]
+    for t in tuples:
+        ret.append(t[0])
+    #d = list(tuples)
+    return ret
+
+
+def registerGUser(email):
+    '''
+    Registers G user given email
+    '''
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+    if email in getGUsers():
+        return False
+    c.execute('INSERT INTO google VALUES(?)', (email))
+    db.commit()
+    db.close()
+    return True
+
+
+def verifyGUser(email):
+    '''
+    Checks if email and password in DB
+    '''
+    users = getGUsers()
+    if email in users:
+        return True
+    return False
+
 
 
 # ==================== project fxns ====================

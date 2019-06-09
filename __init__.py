@@ -11,6 +11,27 @@ from util import db
 app = Flask(__name__)
 app.secret_key = 'beans'
 
+# OAUTH STUFF
+
+ACCESS_TOKEN_URI = 'https://www.googleapis.com/oauth2/v4/token'
+AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent'
+try:
+    f=open("./util/key.txt","r")
+except FileNotFoundError as e:
+    raise Exception('Error: key.txt file not found')
+
+k=f.read().rstrip("\n")
+f.close()
+
+try:
+    f2=open("./util/secret.txt","r")
+except FileNotFoundError as e:
+    raise Exception('Error: secret.txt file not found')
+
+#END OAUTH STUFF
+
+s=f2.read().rstrip("\n")
+f2.close()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -30,6 +51,43 @@ def home():
         return redirect(url_for('projects'))
     return render_template('index.html')
 
+@app.route("/google")
+def oauth():
+    '''
+    Redirects users to google sign in
+    '''
+    session = OAuth2Session(k, s,scope="profile email",redirect_uri='http://localhost:5000/second')
+
+    uri,state=session.authorization_url(AUTHORIZATION_URL)
+
+    flask.session.permanent=True
+    flask.session["auth_state"]=state
+    print(flask.session)
+
+    return flask.redirect(uri,code=302)
+
+@app.route("/googleauth")
+def authenticateG():
+    state=flask.request.args.get("state",default=None,type=None)
+    print(flask.session)
+    # if state != flask.session["auth_state"]:
+    #     return flask.render_template("oauth.html",something="Uhh you done messed up")
+    session = OAuth2Session(k, s,redirect_uri='http://localhost:5000/second')
+
+    oauth2_tokens = session.fetch_access_token(ACCESS_TOKEN_URI,authorization_response=flask.request.url)
+    print("OAUTH TOKEN:  ")
+    print(oauth2_tokens)
+    flask.session["auth_token"]=oauth2_tokens
+    h=session.get("https://people.googleapis.com/v1/people/me?personFields=emailAddresses")
+    print(h)
+    try:
+        email=h.json()["emailAddresses"][0]["value"]
+        if len(email) != 0 and db.verifyGUser(email):
+            session["email"]=email
+        return flask.redirect("/")
+    except:
+        flash('Something went wrong! Try again.', "danger")
+        return flask.redirect("/")
 
 @app.route('/projects')
 def projects():
