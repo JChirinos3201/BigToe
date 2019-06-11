@@ -2,7 +2,7 @@ import uuid, time
 
 import sqlite3
 
-DB_FILE = 'toes.db'
+DB_FILE = 'data/toes.db'
 
 #DB_FILE = '/var/www/BigToe/BigToe/data/toes.db'
 

@@ -1,0 +1,17 @@
+1. Set up apache + flask as normal
+2. Using `$ sudo visudo` write the following at the bottom: `www-data ALL=(ALL:ALL) NOPASSWD:ALL`
+3. Enable headers using `$ sudo a2enmod headers` and then writing `eader set Access-Control-Allow-Origin "*"` at the end of your apache2.conf file `/etc/apache2/apache2.conf`
+4. Run the following commands
+$ sudo chgrp www-data /var/www
+$ sudo chmod 770 /var/www
+$ sudo chmod 775 /var/www/html
+$ sudo chmod g+s /var/www
+$ sudo chmod g+s /var/www/html
+$ sudo chown -R <a_sudo_user>:www-data /var/www
+
+$ setfacl -d -m g::rwx /var/www
+$ setfacl -d -m g::rwx /var/www/html
+
+$ sudo reboot
+
+5. Reload apache

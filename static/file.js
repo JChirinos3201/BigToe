@@ -27,7 +27,10 @@ var run_code = function (filename) {
   var fd = new FormData();
   fd.append('code', code);
   fd.append('filename', filename);
-  xhttp.open('POST', 'http://159.65.162.204/run', true);
+  for (var pair of fd.entries()) {
+    console.log(pair[0] + ', ' + pair[1]);
+  }
+  xhttp.open('POST', 'http://104.248.48.102/run', true);
   xhttp.send(fd);
 };
 
