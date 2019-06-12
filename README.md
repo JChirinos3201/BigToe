@@ -13,7 +13,7 @@ A database includes tables for files, projects, permissions, and users.
 
 ---
 #### Demo
-[Demo placeholder](https://youtu.be/dQw4w9WgXcQ)
+[Watch our video demo here](https://youtu.be/bI0_xEc8uHc)
 
 ---
 ## How to Run
@@ -86,7 +86,7 @@ application.secret_key = 'Add your secret key'
 10. Run `$ sudo service apache2 restart`
 
 ## OAuth
-[insert Maryann]
+- To be implemented
 
 ## Dependencies
 ### Python 3
