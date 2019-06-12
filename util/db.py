@@ -288,7 +288,7 @@ def addFile(filename, projectId):
     while fileId in currentIds:
         fileId = str(uuid.uuid4())
 
-    t = datetime.datetime.today()
+    t = datetime.datetime.today().timestamp()
 
     c.execute('INSERT INTO files VALUES(?, ?, ?, ?, ?)',
               (projectId, fileId, filename, '', t))
