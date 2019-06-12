@@ -12,6 +12,7 @@ var set_fileId = function (newFileId) {
 
 var run_code = function (filename) {
   var code = editor.getValue();
+  editor.setValue('');
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
