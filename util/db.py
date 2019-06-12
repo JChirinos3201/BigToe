@@ -24,13 +24,13 @@ def create_db():
               name TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS drivers(fileId TEXT, \
-                        driver TEXT, times BLOB)')
+                        driver TEXT, times REAL)')
 
     c.execute('CREATE TABLE IF NOT EXISTS permissions(id TEXT, email TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS files(projectId TEXT, \
               fileId TEXT PRIMARY KEY, filename TEXT, content TEXT,\
-              times BLOB)')
+              times REAL)')
 
     db.commit()
     db.close()
@@ -335,7 +335,7 @@ def updateCode(fileId, code):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
 
-    t = datetime.datetime.today()
+    t = datetime.datetime.today().timestamp()
 
     c.execute('UPDATE files SET content=? WHERE fileId=?', (code, fileId))
     c.execute('UPDATE drivers SET times=? WHERE fileId=?', (t, fileId))
@@ -370,7 +370,7 @@ def updateDriver(fileId, email):
 
     c.execute('UPDATE drivers SET driver=? WHERE fileId=?', (email, fileId))
     c.execute('UPDATE drivers SET times=? WHERE fileId=?',
-              (datetime.datetime.today(), fileId))
+              (datetime.datetime.today().timestamp(), fileId))
 
     db.commit()
     db.close()
