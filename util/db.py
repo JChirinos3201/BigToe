@@ -1,4 +1,5 @@
-import uuid, time
+import uuid
+import datetime
 
 import sqlite3
 
@@ -23,13 +24,13 @@ def create_db():
               name TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS drivers(fileId TEXT, \
-                        driver TEXT, times REAL)')
+                        driver TEXT, times BLOB)')
 
     c.execute('CREATE TABLE IF NOT EXISTS permissions(id TEXT, email TEXT)')
 
     c.execute('CREATE TABLE IF NOT EXISTS files(projectId TEXT, \
               fileId TEXT PRIMARY KEY, filename TEXT, content TEXT,\
-              times REAL)')
+              times BLOB)')
 
     db.commit()
     db.close()
@@ -287,7 +288,7 @@ def addFile(filename, projectId):
     while fileId in currentIds:
         fileId = str(uuid.uuid4())
 
-    t = time.time()
+    t = datetime.datetime.today()
 
     c.execute('INSERT INTO files VALUES(?, ?, ?, ?, ?)',
               (projectId, fileId, filename, '', t))
@@ -334,7 +335,7 @@ def updateCode(fileId, code):
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
 
-    t = time.time()
+    t = datetime.datetime.today()
 
     c.execute('UPDATE files SET content=? WHERE fileId=?', (code, fileId))
     c.execute('UPDATE drivers SET times=? WHERE fileId=?', (t, fileId))
@@ -348,6 +349,8 @@ def getDriver(fileId):
     '''
     returns current driver of specified file
     '''
+    # need to set some code that kicks out the driver after 1 minute of
+    # inactivity
     db = sqlite3.connect(DB_FILE)
     c = db.cursor()
 
@@ -367,7 +370,7 @@ def updateDriver(fileId, email):
 
     c.execute('UPDATE drivers SET driver=? WHERE fileId=?', (email, fileId))
     c.execute('UPDATE drivers SET times=? WHERE fileId=?',
-              (time.time(), fileId))
+              (datetime.datetime.today(), fileId))
 
     db.commit()
     db.close()
