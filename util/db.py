@@ -3,9 +3,9 @@ import datetime
 
 import sqlite3
 
-DB_FILE = 'data/toes.db'
+#DB_FILE = 'data/toes.db'
 
-#DB_FILE = '/var/www/BigToe/BigToe/data/toes.db'
+DB_FILE = '/var/www/BigToe/BigToe/data/toes.db'
 
 
 def create_db():

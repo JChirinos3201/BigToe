@@ -114,8 +114,8 @@ def get_files(projectId):
     files = [list(i) for i in
              sorted(db.getFiles(projectId), key=lambda x: x[1])]
     for file in files:
-        file[3] = datetime.datetime.fromtimestamp(file[3])\
-            .strftime('%I:%M:%S %p | %b %d %Y')
+        file[3] = '|{}|'.format(str(file[3]))
+        # file[3] = datetime.datetime.fromtimestamp(file[3]).strftime('%I:%M:%S %p | %b %d %Y')
     return render_template('snippets/project_files.html',
                            projectName=projectName,
                            projectId=projectId,
