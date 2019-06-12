@@ -19,6 +19,7 @@
     .success {
       color: green
     }
+
   </style>
 
   <title>Code X Lab</title>
@@ -45,7 +46,7 @@
           <div class="input-group">
             <input type="password" id="password" name="password" placeholder="Password" class="form-control" maxlength="30" required>
             <div class="input-group-append">
-              <button class="btn border text-muted" type="button" id="eye"><i class="fas fa-eye"></i></button>
+              <button class="btn border text-muted" type="button" id="eye"><i class="fas fa-eye-slash"></i></button>
             </div>
           </div>
         </div>
@@ -66,15 +67,18 @@
     var show_hide_password = function() {
       if (password.type == 'password') {
         password.type = 'text';
-        eye.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        eye.innerHTML = '<i class="fas fa-eye"></i>';
       } else {
         password.type = 'password';
-        eye.innerHTML = '<i class="fas fa-eye"></i>';
+        eye.innerHTML = '<i class="fas fa-eye-slash"></i>';
       }
     }
     eye.addEventListener('click', function(e) {
       show_hide_password();
       e.preventDefault();
     });
+
   </script>
-</body></html>
+</body>
+
+</html>

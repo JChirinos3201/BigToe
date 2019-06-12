@@ -28,6 +28,7 @@
     .project-links:hover {
       text-decoration: none;
     }
+
   </style>
 
 
@@ -58,7 +59,7 @@
             <div class="input-group">
               <input type="password" id="password" name="password" placeholder="Password" class="form-control" maxlength="30" required>
               <div class="input-group-append">
-                <button class="btn border text-muted" type="button" id="topEye" onclick="show_hide_password();"><i class="fas fa-eye"></i></button>
+                <button class="btn border text-muted" type="button" id="topEye" onclick="show_hide_password();"><i class="fas fa-eye-slash"></i></button>
               </div>
             </div>
           </div>
@@ -67,7 +68,7 @@
             <div class="input-group">
               <input type="password" id="password-verify" name="password-verify" placeholder="Re-enter password" class="form-control" maxlength="30" required>
               <div class="input-group-append">
-                <button class="btn border text-muted" type="button" id="bottomEye" onclick="show_hide_password_verify();"><i class="fas fa-eye"></i></button>
+                <button class="btn border text-muted" type="button" id="bottomEye" onclick="show_hide_password_verify();"><i class="fas fa-eye-slash"></i></button>
               </div>
             </div>
           </div>
@@ -94,21 +95,24 @@
     var show_hide_password = function() {
       if (password.type == 'password') {
         password.type = 'text';
-        top_eye.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        top_eye.innerHTML = '<i class="fas fa-eye"></i>';
       } else {
         password.type = 'password';
-        top_eye.innerHTML = '<i class="fas fa-eye"></i>';
+        top_eye.innerHTML = '<i class="fas fa-eye-slash"></i>';
       }
     }
 
     var show_hide_password_verify = function() {
       if (password_verify.type == 'password') {
         password_verify.type = 'text';
-        bottom_eye.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        bottom_eye.innerHTML = '<i class="fas fa-eye"></i>';
       } else {
         password_verify.type = 'password';
-        bottom_eye.innerHTML = '<i class="fas fa-eye"></i>';
+        bottom_eye.innerHTML = '<i class="fas fa-eye-slash"></i>';
       }
     }
+
   </script>
-</body></html>
+</body>
+
+</html>
