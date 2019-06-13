@@ -28,6 +28,7 @@ A database includes tables for files, projects, permissions, and users.
 7. Run the app by running `$ python3 __init__.py`
 
 ### Install and run on Apache2
+#### NOTE: You may have to format most commands with `$ sudo <command>`
 0. Set up an Ubuntu droplet
 1. Run `$ sudo apt install apache2`, followed by `$ sudo ufw allow in "Apache Full"`
 2. Run `$ sudo apt-get install libapache2-mod-wsgi-py3`
