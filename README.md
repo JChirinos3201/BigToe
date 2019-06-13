@@ -39,7 +39,6 @@ A database includes tables for files, projects, permissions, and users.
 ```
 <VirtualHost *:80>
                 ServerName <your.ip.address.here>
-                ServerAdmin admin@<your.ip.address.here>
                 WSGIScriptAlias / /var/www/BigToe/bigtoe.wsgi
                 <Directory /var/www/BigToe/BigToe/>
                         Order allow,deny
