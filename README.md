@@ -72,9 +72,10 @@ application.secret_key = 'Add your secret key'
 ```
 
 9. Navigate to `/var/www/BigToe/BigToe/`
-10. Run `$ python3 util/db.py`. Your directory structure should now be similar to
-11. Run `$ chmod -R 755 data/`
-12. Run `$ sudo systemctl reload apache2`
+10. Run `$ chmod -R 755 data/`
+11. Run `$ python3 util/db.py`. Your directory structure should now be similar to
+12. Run `$ chmod -R 755 data/`
+13. Run `$ sudo systemctl reload apache2`
 
 
 ## OAuth
