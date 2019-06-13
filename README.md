@@ -30,8 +30,9 @@ __To create a venv...__
 1. If you do not have python3, install python3.6 by typing `sudo apt-get install python3.6`
 2. Clone the repo
 3. After activating the virtual environment,
-install our __dependencies__ with `pip install -r <path-to-file>requirements.txt`
-
+install our __dependencies__ with `$ pip install -r <path-to-file>requirements.txt`
+4. Run `$ python3 util/db.py`
+5. Make sure the `data/` and `data/toes.db` has all permissions (`chmod -R 777 data/`)
 
 ### On localhost
 #### Running Our Application
