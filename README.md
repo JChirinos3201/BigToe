@@ -34,12 +34,12 @@ A database includes tables for files, projects, permissions, and users.
 3. Clone repo into `/var/www/BigToe/`, creating directories if needed
 4. Run `$ sudo apt-get install python3-pip`
 5. Run `$ sudo apt install python3-flask`
-6. Write the following into `/etc/apache2/sites-available/BigToe.conf`
+6. Write the following into `/etc/apache2/sites-available/BigToe.conf`, replacing the IP addresses
 
 ```
 <VirtualHost *:80>
-                ServerName 206.81.1.145
-                ServerAdmin admin@206.81.1.145
+                ServerName <your.ip.address.here>
+                ServerAdmin admin@<your.ip.address.here>
                 WSGIScriptAlias / /var/www/BigToe/bigtoe.wsgi
                 <Directory /var/www/BigToe/BigToe/>
                         Order allow,deny
@@ -69,6 +69,7 @@ sys.path.insert(1, '/var/www/BigToe/BigToe')
 from BigToe import app as application
 application.secret_key = 'Add your secret key'
 ```
+
 9. Navigate to `/var/www/BigToe/BigToe/`
 10. Run `$ python3 util/db.py`
 11. Run `$ chmod -R 755 data/`
