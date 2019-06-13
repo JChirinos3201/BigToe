@@ -34,7 +34,7 @@ A database includes tables for files, projects, permissions, and users.
 3. Clone repo into `/var/www/BigToe/`, creating directories if needed
 4. Run `$ sudo apt-get install python3-pip`
 5. Run `$ sudo apt install python3-flask`
-6. Write the following into `/etc/apache2/sites-available/BigToe.conf`, replacing the IP addresses
+6. Write the following into `/etc/apache2/sites-available/BigToe.conf`, replacing the IP address
 
 ```
 <VirtualHost *:80>
