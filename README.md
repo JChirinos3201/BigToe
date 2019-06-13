@@ -31,7 +31,7 @@ A database includes tables for files, projects, permissions, and users.
 0. Set up an Ubuntu droplet
 1. Run `$ sudo apt install apache2`, followed by `$ sudo ufw allow in "Apache Full"`
 2. Run `$ sudo apt-get install libapache2-mod-wsgi-py3`
-3. Clone repo into `/var/www/BigToe/`, creating directories if needed
+3. Clone repo into `/var/www/BigToe/`, creating directories if needed. Your directory structure should now be similar to the following
 4. Run `$ sudo apt-get install python3-pip`
 5. Run `$ sudo apt install python3-flask`
 6. Write the following into `/etc/apache2/sites-available/BigToe.conf`, replacing the IP address
@@ -54,6 +54,7 @@ A database includes tables for files, projects, permissions, and users.
                 CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
+
 7. Run `$ sudo a2ensite BigToe`
 8. Write the following into `/var/www/BigToe/bigtoe.wsgi`
 
@@ -70,7 +71,7 @@ application.secret_key = 'Add your secret key'
 ```
 
 9. Navigate to `/var/www/BigToe/BigToe/`
-10. Run `$ python3 util/db.py`
+10. Run `$ python3 util/db.py`. Your directory structure should now be similar to
 11. Run `$ chmod -R 755 data/`
 12. Run `$ sudo systemctl reload apache2`
 
