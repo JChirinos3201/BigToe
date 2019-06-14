@@ -13,44 +13,33 @@ A database includes tables for files, projects, permissions, and users.
 
 ---
 #### Demo
-[Demo placeholder](https://youtu.be/dQw4w9WgXcQ)
+[Watch our video demo here](https://youtu.be/bI0_xEc8uHc)
 
 ---
+
 ## How to Run
-#### Create a Virtual Environment
-__To create a venv...__
-1. In a terminal, navigate to the directory you want to keep your venv (eg. `cd ~/<venv_dir>`)
-2. Run `python3 -m venv <venv_name>` (replace `<venv_name>` with whatever name you'd like)
-3. Activate your virtual environment by running `source <venv_name>/bin/activate`
-4. Your computer's name should be preceeded by `(venv_name)` now. You are inside your virtual environment.
-5. You can deactivate your venv by running the command `deactivate`
-6. You can activate the venv from any current working directory by running `source ~/venv_name/bin/activate`
+### Install and run on localhost
+1. Navigate to desired directory and clone the BigToe repo
+2. Install python3 pip by running `$ apt-get install python3-pip`
+3. Install virtualenv by running `$ pip3 install virtualenv`
+4. Make a virtual environment by running `$ virtualenv <path/to/customVenvName>`
+5. Open your virtual environment by running `$ flask <path/to/customVenvName>/bin/activate'
+6. Install flask by runnning `$ pip3 install Flask`
+7. Run the app by running `$ python3 __init__.py`
 
-#### Installing Dependencies
-1. If you do not have python3, install python3.6 by typing `sudo apt-get install python3.6`
-2. Clone the repo
-3. After activating the virtual environment,
-install our __dependencies__ with `pip install -r <path-to-file>requirements.txt`
-
-
-### On localhost
-#### Running Our Application
-1. Run `python __init__.py` to run the app on your localhost.
-2. Open `localhost:5000` in a browser
-
-## On Apache2
+### Install and run on Apache2
+#### NOTE: You may have to format most commands with `$ sudo <command>`
 0. Set up an Ubuntu droplet
 1. Run `$ sudo apt install apache2`, followed by `$ sudo ufw allow in "Apache Full"`
 2. Run `$ sudo apt-get install libapache2-mod-wsgi-py3`
-3. Clone repo into `/var/www/BigToe/`, creating directories as needed
+3. Clone repo into `/var/www/BigToe/`, creating directories if needed. Your directory structure should now be similar to the following
 4. Run `$ sudo apt-get install python3-pip`
 5. Run `$ sudo apt install python3-flask`
-6. Write the following into `/etc/apache2/sites-available/BigToe.conf`
+6. Write the following into `/etc/apache2/sites-available/BigToe.conf`, replacing the IP address
 
 ```
 <VirtualHost *:80>
-                ServerName 206.81.1.145
-                ServerAdmin admin@206.81.1.145
+                ServerName <your.ip.address.here>
                 WSGIScriptAlias / /var/www/BigToe/bigtoe.wsgi
                 <Directory /var/www/BigToe/BigToe/>
                         Order allow,deny
@@ -82,11 +71,15 @@ from BigToe import app as application
 application.secret_key = 'Add your secret key'
 ```
 
-9. From `/var/www/BigToe/BigToe/`, run `$ python3 util/db.py`
-10. Run `$ sudo service apache2 restart`
+9. Navigate to `/var/www/BigToe/BigToe/`
+10. Run `$ chmod -R 755 data/`
+11. Run `$ python3 util/db.py`. Your directory structure should now be similar to
+12. Run `$ chmod -R 755 data/`
+13. Run `$ sudo systemctl reload apache2`
+
 
 ## OAuth
-[insert Maryann]
+- To be implemented
 
 ## Dependencies
 ### Python 3
