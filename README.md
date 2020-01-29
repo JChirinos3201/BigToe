@@ -1,4 +1,3 @@
-# Team BigToe
 # Project Code X Lab
 #### Members: Joan Chirinos (PM), Anton Danylenko, Maryann Foley, and Susan Lin
 ---
