@@ -18,7 +18,7 @@ A database includes tables for files, projects, permissions, and users.
 
 ## How to Run
 ### Install and run on localhost
-1. Navigate to desired directory and clone the BigToe repo
+1. Navigate to desired directory and clone the CodeXLab repo
 2. Install python3 pip by running `$ apt-get install python3-pip`
 3. Install virtualenv by running `$ pip3 install virtualenv`
 4. Make a virtual environment by running `$ virtualenv <path/to/customVenvName>`
@@ -31,21 +31,21 @@ A database includes tables for files, projects, permissions, and users.
 0. Set up an Ubuntu droplet
 1. Run `$ sudo apt install apache2`, followed by `$ sudo ufw allow in "Apache Full"`
 2. Run `$ sudo apt-get install libapache2-mod-wsgi-py3`
-3. Clone repo into `/var/www/BigToe/`, creating directories if needed. Your directory structure should now be similar to the following
+3. Clone repo into `/var/www/CodeXLab/`, creating directories if needed. Your directory structure should now be similar to the following
 4. Run `$ sudo apt-get install python3-pip`
 5. Run `$ sudo apt install python3-flask`
-6. Write the following into `/etc/apache2/sites-available/BigToe.conf`, replacing the IP address
+6. Write the following into `/etc/apache2/sites-available/CodeXLab.conf`, replacing the IP address
 
 ```
 <VirtualHost *:80>
                 ServerName <your.ip.address.here>
-                WSGIScriptAlias / /var/www/BigToe/bigtoe.wsgi
-                <Directory /var/www/BigToe/BigToe/>
+                WSGIScriptAlias / /var/www/CodeXLab/codexlab.wsgi
+                <Directory /var/www/CodeXLab/CodeXLab/>
                         Order allow,deny
                         Allow from all
                 </Directory>
-                Alias /static /var/www/BigToe/BigToe/static
-                <Directory /var/www/BigToe/BigToe/static/>
+                Alias /static /var/www/CodeXLab/CodeXLab/static
+                <Directory /var/www/CodeXLab/CodeXLab/static/>
                         Order allow,deny
                         Allow from all
                 </Directory>
@@ -55,8 +55,8 @@ A database includes tables for files, projects, permissions, and users.
 </VirtualHost>
 ```
 
-7. Run `$ sudo a2ensite BigToe`
-8. Write the following into `/var/www/BigToe/bigtoe.wsgi`
+7. Run `$ sudo a2ensite CodeXLab`
+8. Write the following into `/var/www/CodeXLab/codexlab.wsgi`
 
 ```
 #!/usr/bin/python3
